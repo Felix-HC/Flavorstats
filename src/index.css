@@ -5,3 +5,20 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --default-font: "Jua", system-ui;
+
+  --base: #E7D4B1;
+  --overlay: #D7B593;
+  --overlay-2: #F8E9D3;
+  --text: #F8E9D3;
+  --text-2: #4E2C33;
+  --text-3: #7B4942;
+  --green: #73A542;
+  --brgreen: #D0DA90;
+  --red: #BA4A51;
+  --brred: #F4B19F;
+  --blue: #3D5E8A;
+  --brblue: #4F8FBA;
+}
