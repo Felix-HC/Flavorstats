@@ -132,7 +132,7 @@
     }
 }
 
-#results-not-found {
+#results-not-found, #results-loading {
     padding: 15px;
     font-family: var(--default-font);
     color: var(--text-3);

@@ -8,14 +8,14 @@ function App() {
   const [showingResults, showResults] = useState<boolean>(false);
 
   const searchUsers = () => {
+    showResults(true);
+
     fetch(`http://localhost:5000/search?query=${searchInput}`)
       .then(response => response.json())
       .then(data => {
         data.sort((userA: any, userB: any) => userB.cookies - userA.cookies);
         setResults(data);
       });
-
-    showResults(true);
   }
 
   return (
@@ -47,6 +47,7 @@ function App() {
                   </ul>
                 )
               })}
+              {results === undefined && <span id="results-loading">Loading...</span>}
               {results?.length === 0 && <span id="results-not-found">No users found :c</span>}
             </li>
           </div>
