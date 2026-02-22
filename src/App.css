@@ -98,13 +98,23 @@
         & > ul {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
             cursor: pointer;
             transition: .2s ease background-color;
             font-family: var(--default-font);
             font-size: 36px;
             color: var(--text-2);
             padding: 15px;
+
+            & > div {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            & > span {
+                font-size: 24px;
+            }
 
             &:hover {
                 background-color: color-mix(in srgb, var(--overlay-2) 100%, black 20%);

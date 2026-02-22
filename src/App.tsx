@@ -39,8 +39,11 @@ function App() {
               {results?.map((user, index) => {
                 return (
                   <ul key={index}>
-                    <img src={user.avatar} />
-                    <span>{user.display_name}</span>
+                    <div>
+                      <img src={user.avatar} />
+                      <span>{user.display_name}</span>
+                    </div>
+                    <span>🍪 {user.cookies || 0}</span>
                   </ul>
                 )
               })}
