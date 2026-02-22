@@ -44,6 +44,7 @@ function App() {
                   </ul>
                 )
               })}
+              {results?.length === 0 && <span id="results-not-found">No users found :c</span>}
             </li>
           </div>
         }

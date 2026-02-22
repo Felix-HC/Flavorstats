@@ -121,3 +121,10 @@
         border-color: var(--text-2);
     }
 }
+
+#results-not-found {
+    padding: 15px;
+    font-family: var(--default-font);
+    color: var(--text-2);
+    font-size: 36px;
+}
