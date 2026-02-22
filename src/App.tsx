@@ -30,7 +30,7 @@ function App() {
         <div id="input-wrapper">
           <h2>Search Users</h2>
           <form onSubmit={(e) => { e.preventDefault(); searchUsers() }}>
-            <input id="user-input" type="text" placeholder="_" onChange={(e) => setSearchInput(e.target.value)} />
+            <input id="user-input" type="text" placeholder="Search for users..." autoComplete="off" onChange={(e) => setSearchInput(e.target.value)} />
           </form>
         </div>
         {showingResults &&
