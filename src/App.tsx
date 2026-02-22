@@ -8,11 +8,12 @@ function App() {
   const [showingResults, showResults] = useState<boolean>(false);
 
   const searchUsers = () => {
-    console.log(`http://localhost:5000/search?query=${searchInput}`);
-
     fetch(`http://localhost:5000/search?query=${searchInput}`)
       .then(response => response.json())
-      .then(data => setResults(data));
+      .then(data => {
+        data.sort((userA: any, userB: any) => userB.cookies - userA.cookies);
+        setResults(data);
+      });
 
     showResults(true);
   }
