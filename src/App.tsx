@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import OrpheusFlagLeftSvg from "./assets/svgs/flag-orpheus-left.svg";
+import { useState } from 'react'
 
 import './App.css'
 
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <div id="app">
+      <img src={OrpheusFlagLeftSvg} id="orpheus-flag" />
       <header>
         <div id="app-title">
           <p id="app-title-surface">Flavorstats</p>
