@@ -1,4 +1,4 @@
-#app {
+#home {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -45,11 +45,11 @@
     }
 }
 
-#app-title {
+#home-title {
     position: relative;
 }
 
-#app-title-surface {
+#home-title-surface {
     position: relative;
     font-family: var(--default-font);
     color: var(--text);
@@ -60,7 +60,7 @@
     z-index: 1;
 }
 
-#app-title-back {
+#home-title-back {
     position: absolute;
     height: 115%;
     width: 85%;

@@ -1,10 +1,10 @@
-import OrpheusFlagLeftSvg from "./assets/svgs/flag-orpheus-left.svg";
+import OrpheusFlagLeftSvg from "../../assets/svgs/flag-orpheus-left.svg";
 import { useState } from 'react'
 import { GitBranch } from "lucide-react";
 
-import './App.css'
+import './Home.css'
 
-function App() {
+export default function Home() {
   const [results, setResults] = useState<Array<any> | undefined>(undefined);
   const [searchInput, setSearchInput] = useState<string>("");
   const [showingResults, showResults] = useState<boolean>(false);
@@ -30,12 +30,12 @@ function App() {
   }
 
   return (
-    <div id="app">
+    <div id="home">
       <img src={OrpheusFlagLeftSvg} id="orpheus-flag" />
       <header>
-        <div id="app-title">
-          <p id="app-title-surface">Flavorstats</p>
-          <div id="app-title-back" />
+        <div id="home-title">
+          <p id="home-title-surface">Flavorstats</p>
+          <div id="home-title-back" />
         </div>
       </header>
       <main>
@@ -76,5 +76,3 @@ function App() {
     </div>
   )
 }
-
-export default App
