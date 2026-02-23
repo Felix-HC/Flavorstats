@@ -124,6 +124,7 @@
             font-size: 36px;
             color: var(--text-3);
             padding: 15px;
+            height: 94px; /* height of the content (img is 64px) + padding (15px) */
 
             & > div {
                 display: flex;
