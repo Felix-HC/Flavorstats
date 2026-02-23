@@ -2,11 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './sites/Home/Home.tsx'
+import Stats from './sites/Stats/Stats.tsx'
 
 import './index.css'
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> }
+  { path: "/", element: <Home /> },
+  { path: "/stats", element: <Stats />}
 ])
 
 createRoot(document.getElementById('root')!).render(

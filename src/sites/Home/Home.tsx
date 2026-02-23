@@ -1,5 +1,6 @@
 import OrpheusFlagLeftSvg from "../../assets/svgs/flag-orpheus-left.svg";
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { GitBranch } from "lucide-react";
 
 import './Home.css'
@@ -9,6 +10,7 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState<string>("");
   const [showingResults, showResults] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
+  const navigate = useNavigate();
 
   const searchUsers = () => {
     setError(undefined);
@@ -50,7 +52,7 @@ export default function Home() {
             <li>
               {results?.map((user, index) => {
                 return (
-                  <ul key={index}>
+                  <ul key={index} onClick={() => navigate(`/stats?user=${user.id}`)}>
                     <div>
                       <img src={user.avatar} />
                       <span>{user.display_name}</span>
