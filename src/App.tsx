@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 
@@ -6,15 +6,24 @@ function App() {
   const [results, setResults] = useState<Array<any> | undefined>(undefined);
   const [searchInput, setSearchInput] = useState<string>("");
   const [showingResults, showResults] = useState<boolean>(false);
+  const [error, setError] = useState<string | undefined>();
 
   const searchUsers = () => {
+    setError(undefined);
+    setResults(undefined);
     showResults(true);
-
+    
     fetch(`http://localhost:5000/search?query=${searchInput}`)
       .then(response => response.json())
       .then(data => {
         data.sort((userA: any, userB: any) => userB.cookies - userA.cookies);
         setResults(data);
+        
+        data.length === 0 && setError("No users found :c");
+      })
+      .catch(error => {
+        console.error(error);
+        setError("Couldn't fetch results");
       });
   }
 
@@ -47,8 +56,8 @@ function App() {
                   </ul>
                 )
               })}
-              {results === undefined && <span id="results-loading">Loading...</span>}
-              {results?.length === 0 && <span id="results-not-found">No users found :c</span>}
+              {(results === undefined && error === undefined) && <span id="results-loading">Loading...</span>}
+              {error !== undefined && <span id="results-not-found">{error}</span>}
             </li>
           </div>
         }
