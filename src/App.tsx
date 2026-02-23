@@ -1,5 +1,6 @@
 import OrpheusFlagLeftSvg from "./assets/svgs/flag-orpheus-left.svg";
 import { useState } from 'react'
+import { GitBranch } from "lucide-react";
 
 import './App.css'
 
@@ -64,6 +65,14 @@ function App() {
           </div>
         }
       </main>
+      <footer>
+        <button onClick={() => window.open("https://github.com/Felix-HC/Flavorstats")}>
+            <GitBranch
+              size={64}
+              strokeWidth={1.5}
+            />
+        </button>
+      </footer>
     </div>
   )
 }

@@ -22,3 +22,9 @@
   --blue: #3D5E8A;
   --brblue: #4F8FBA;
 }
+
+button {
+  background: unset;
+  border: unset;
+  cursor: pointer;
+}

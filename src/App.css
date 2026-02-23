@@ -1,20 +1,25 @@
 #app {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     padding: 10px;
     background: var(--base);
     z-index: 0;
 
+    & svg {
+        transition: .2s ease stroke;
+    }
+
     & > header {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 15vh;
+        height: 15vh;
     }
 
     & > main {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         gap: 10px;
 
@@ -22,6 +27,20 @@
             font-family: var(--default-font);
             font-size: 32px;
             color: var(--text-2);
+        }
+    }
+
+    & > footer {
+        display: flex;
+        margin-top: auto;
+        justify-content: right;
+
+        & svg {
+            stroke: var(--text-3);
+
+            &:hover {
+                stroke: var(--text-2)
+            }
         }
     }
 }
@@ -139,16 +158,16 @@
     font-size: 36px;
 }
 
-@media screen and (max-width: 1000px) {
-    #orpheus-flag {
-        display: none;
-    }
-}
-
 #orpheus-flag {
     position: absolute;
     top: 20px;
     left: 0;
     z-index: 3;
     width: 250px;
+}
+
+@media screen and (max-width: 1000px) {
+    #orpheus-flag {
+        display: none;
+    }
 }
