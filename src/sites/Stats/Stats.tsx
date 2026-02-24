@@ -57,6 +57,10 @@ export default function Stats() {
             return a - b;
         });
 
+        // Get top project (sort -> get index 0)
+        projects.sort((a: any, b: any) => b.devlogs.totalLikes - a.devlogs.totalLikes);
+        const topProject = projects[0];
+
         const extraInformation = {
             totalProjects: projects.length,
             totalShips: ships,
@@ -67,7 +71,8 @@ export default function Stats() {
             totalChars: totalChars,
             totalWords: totalWords,
             earliestYear: creationDates[0].getFullYear(),
-            latestYear: creationDates[creationDates.length - 1].getFullYear()
+            latestYear: creationDates[creationDates.length - 1].getFullYear(),
+            topProject: topProject
         }
 
         setExtraInformation(extraInformation);
@@ -100,6 +105,16 @@ export default function Stats() {
                             <span>{extraInformation.totalAI === 0 ? 0 : extraInformation.totalAI / extraInformation.totalProjects * 100}% AI-Usage</span><br />
                             <span>{extraInformation.totalShips === 0 ? 0 : (extraInformation.totalShips / extraInformation.totalProjects * 100).toFixed(1)}% shipped</span>< br/>
                             <span><b>TODO:</b> Top project</span>
+                        </section>
+                        <section id="top-project">
+                            <h2>Top Project</h2>
+                            <div>
+                                <h2>{extraInformation.topProject.title}</h2>
+                                <span>{extraInformation.topProject.description}</span>
+                                <div>
+                                    <span>{extraInformation.topProject.devlogs.totalLikes} likes – {extraInformation.topProject.devlogs.total} devlogs – {Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s</span>
+                                </div>
+                            </div>
                         </section>
                         <section id="stats-devlogs">
                             <h2>Devlogs</h2>
