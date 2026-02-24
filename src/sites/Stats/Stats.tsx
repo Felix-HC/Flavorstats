@@ -37,7 +37,7 @@ export default function Stats() {
         let totalChars = 0;
         let totalWords = 0;
 
-        const creationDates: Array<number> = [];
+        const creationDates: Array<Date> = [];
 
         projects.forEach((project: any) => {
             project.shipped && ships++;
@@ -48,9 +48,14 @@ export default function Stats() {
             totalChars += project.devlogs.totalChars || 0;
             totalWords += project.devlogs.totalWords || 0;
 
-            creationDates.push(project.creationDate);
+            creationDates.push(new Date(project.creationDate || 0));
         });
         
+        // Sort dates
+        creationDates.sort((a: any, b: any) => {
+            return a - b;
+        });
+
         const extraInformation = {
             totalProjects: projects.length,
             totalShips: ships,
@@ -60,11 +65,11 @@ export default function Stats() {
             totalComments: totalReceivedComments,
             totalChars: totalChars,
             totalWords: totalWords,
-            creationDates: creationDates
+            earliestYear: creationDates[0].getFullYear(),
+            latestYear: creationDates[creationDates.length - 1].getFullYear()
         }
 
         setExtraInformation(extraInformation);
-        console.log(extraInformation);
     }
 
     if (error !== undefined) return <span>{error}</span>;
@@ -78,7 +83,7 @@ export default function Stats() {
                         <img src={user.avatar} />
                         <div>
                             <h1>{user.displayName}'s Flavortown</h1>
-                            <span><b>TODO:</b> calc years</span>
+                            <span>{extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear + "/" + extraInformation.latestYear}</span>
                         </div>
                     </header>
                     <main>
