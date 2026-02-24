@@ -102,24 +102,24 @@ export default function Stats() {
                                 <h2>Projects</h2>
                                 <div>
                                     <div>
-                                    <Card
-                                        firstContent="Total Time"
-                                        secondContent={
-                                            user.totalTimeSeconds >= 3600 ?
-                                                `${(user.totalTimeSeconds / 60 / 60).toFixed(1)} hours`
-                                                :
-                                                `${(user.totalTimeSeconds / 60).toFixed(1)} minutes`
-                                        }
-                                    />
-                                    <Card
-                                        firstContent="Avg. Time"
-                                        secondContent={
-                                            user.totalTimeSeconds >= 3600 ?
-                                                `${(user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours`
-                                                :
-                                                `${(user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes`
-                                        }
-                                    />
+                                        <Card
+                                            firstContent="Total Time"
+                                            secondContent={
+                                                user.totalTimeSeconds >= 3600 ?
+                                                    `${(user.totalTimeSeconds / 60 / 60).toFixed(1)} hours`
+                                                    :
+                                                    `${(user.totalTimeSeconds / 60).toFixed(1)} minutes`
+                                            }
+                                        />
+                                        <Card
+                                            firstContent="Avg. Time"
+                                            secondContent={
+                                                user.totalTimeSeconds >= 3600 ?
+                                                    `${(user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours`
+                                                    :
+                                                    `${(user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes`
+                                            }
+                                        />
                                     </div>
                                     <div id="projects-grid">
                                         <Card
@@ -145,13 +145,49 @@ export default function Stats() {
                                     <div className="divider" />
                                     <span id="top-project-stats"><span>{extraInformation.topProject.devlogs.totalLikes} likes – {extraInformation.topProject.devlogs.total} devlogs – {Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s</span></span>
                                 </div>
-                                <span>{(extraInformation.totalWords / extraInformation.totalDevlogs).toFixed(1)} words/avg</span><br />
-                                <span>Most used word: {user.mostUsedWords[0][0]}</span><br />
-
-                                <span>{extraInformation.totalLikes} likes</span><br/>
-                                <span>{extraInformation.totalChars} chars</span><br />
-                                <span>{extraInformation.totalWords} words</span><br />
-                                <span>{extraInformation.totalComments} comments</span><br />
+                            </section>
+                        </div>
+                        <div className="stats-row">
+                            <section>
+                                <h2>Devlogs</h2>
+                                <div>
+                                    <div>
+                                        <Card
+                                            firstContent="Total Logs"
+                                            secondContent={`${extraInformation.totalDevlogs} devlogs`}
+                                        />
+                                        <Card
+                                            firstContent="Avg. Chars"
+                                            secondContent={`${Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs)} chars`}
+                                        />
+                                        <Card
+                                            firstContent="Avg. Chars"
+                                            secondContent={`${Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs)} chars`}
+                                        />
+                                        <Card
+                                            firstContent="Avg. Words"
+                                            secondContent={`${Math.floor(extraInformation.totalWords / extraInformation.totalDevlogs)} words`}
+                                        />
+                                        <Card
+                                            firstContent="Fav. Words"
+                                            secondContent={`"${user.mostUsedWords[0][0]}"`}
+                                        />
+                                    </div>
+                                    <div>
+                                        <Card
+                                            firstContent={`${extraInformation.totalLikes} likes`}
+                                        />
+                                        <Card
+                                            firstContent={`${extraInformation.totalComments} likes`}
+                                        />
+                                        <Card
+                                            firstContent={`${extraInformation.totalChars} chars`}
+                                        />
+                                        <Card
+                                            firstContent={`${extraInformation.totalWords} words`}
+                                        />
+                                    </div>
+                                </div>
                             </section>
                         </div>
                     </main>
