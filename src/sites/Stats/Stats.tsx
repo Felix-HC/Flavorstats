@@ -98,13 +98,19 @@ export default function Stats() {
                     <main>
                         <section id="stats-projects">
                             <h2>Projects</h2>
-                            <span>{user.totalTimeSeconds} seconds</span><br />
-                            <span>{(user.totalTimeSeconds / extraInformation.totalProjects).toFixed(1)} seconds/avg</span><br />
-
+                            {user.totalTimeSeconds >= 3600 ?
+                                <span>{(user.totalTimeSeconds / 60 / 60).toFixed(1)} hours</span>
+                                :
+                                <span>{(user.totalTimeSeconds / 60).toFixed(1)} minutes</span>
+                            }
+                            {user.totalTimeSeconds >= 3600 ?
+                                <span>{(user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours/avg</span>
+                                :
+                                <span>{(user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes/avg</span>
+                            }
                             <span>{extraInformation.totalProjects} projects</span><br />
                             <span>{extraInformation.totalAI === 0 ? 0 : extraInformation.totalAI / extraInformation.totalProjects * 100}% AI-Usage</span><br />
                             <span>{extraInformation.totalShips === 0 ? 0 : (extraInformation.totalShips / extraInformation.totalProjects * 100).toFixed(1)}% shipped</span>< br/>
-                            <span><b>TODO:</b> Top project</span>
                         </section>
                         <section id="top-project">
                             <h2>Top Project</h2>
@@ -121,7 +127,7 @@ export default function Stats() {
                             <span>{extraInformation.totalDevlogs} devlogs</span>
                             <span>{(extraInformation.totalChars / extraInformation.totalDevlogs).toFixed(1)} chars/avg</span><br />
                             <span>{(extraInformation.totalWords / extraInformation.totalDevlogs).toFixed(1)} words/avg</span><br />
-                            <span>Most used word: {user.mostUsedWords[0]}</span><br />
+                            <span>Most used word: {user.mostUsedWords[0][0]}</span><br />
 
                             <span>{extraInformation.totalLikes} likes</span><br/>
                             <span>{extraInformation.totalChars} chars</span><br />
