@@ -161,10 +161,6 @@ export default function Stats() {
                                             secondContent={`${Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs)} chars`}
                                         />
                                         <Card
-                                            firstContent="Avg. Chars"
-                                            secondContent={`${Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs)} chars`}
-                                        />
-                                        <Card
                                             firstContent="Avg. Words"
                                             secondContent={`${Math.floor(extraInformation.totalWords / extraInformation.totalDevlogs)} words`}
                                         />
@@ -178,7 +174,7 @@ export default function Stats() {
                                             firstContent={`${extraInformation.totalLikes} likes`}
                                         />
                                         <Card
-                                            firstContent={`${extraInformation.totalComments} likes`}
+                                            firstContent={`${extraInformation.totalComments} comments`}
                                         />
                                         <Card
                                             firstContent={`${extraInformation.totalChars} chars`}
