@@ -1,0 +1,47 @@
+#stats {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--base);
+    font-family: var(--default-font);
+    padding: 50px;
+
+    & h1 {
+        font-size: 48px;
+        line-height: 100%;
+    }
+
+    & > header {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        color: var(--text-2);
+
+        & > div:not(#avatar) {
+            display: flex;
+            flex-direction: column;
+            
+            & > span {
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+#avatar {
+    position: relative;
+
+    & #avatar-img {
+        height: 125px;
+        border-radius: 100%;
+        border: 10px solid var(--red);
+    }
+
+    & #avatar-hat {
+        position: absolute;
+        height: 130px;
+        top: -50px;;
+        left: -24px;
+    }
+}
+

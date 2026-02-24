@@ -1,4 +1,4 @@
-import OrpheusFlagLeftSvg from "../../assets/svgs/flag-orpheus-left.svg";
+import OrpheusFlagLeftSvg from "../../assets/flag-orpheus-left.svg";
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { GitBranch } from "lucide-react";

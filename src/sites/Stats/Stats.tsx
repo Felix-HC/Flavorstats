@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import ChefHat from '../../assets/chef-hat.webp';
 
 import './Stats.css'
 
@@ -80,7 +81,10 @@ export default function Stats() {
             {(user !== undefined && extraInformation !== undefined) &&
                 <>
                     <header>
-                        <img src={user.avatar} />
+                        <div id="avatar">
+                            <img id="avatar-hat" src={ChefHat} />
+                            <img id="avatar-img" src={user.avatar} />
+                        </div>
                         <div>
                             <h1>{user.displayName}'s Flavortown</h1>
                             <span>{extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear + "/" + extraInformation.latestYear}</span>
@@ -88,17 +92,17 @@ export default function Stats() {
                     </header>
                     <main>
                         <section id="stats-projects">
-                            <h3>Projects</h3>
+                            <h2>Projects</h2>
                             <span>{user.totalTimeSeconds} seconds</span><br />
                             <span>{(user.totalTimeSeconds / extraInformation.totalProjects).toFixed(1)} seconds/avg</span><br />
 
                             <span>{extraInformation.totalProjects} projects</span><br />
                             <span>{extraInformation.totalAI === 0 ? 0 : extraInformation.totalAI / extraInformation.totalProjects * 100}% AI-Usage</span><br />
-                            <span>{extraInformation.totalShips === 0 ? 0 : extraInformation.totalShips / extraInformation.totalProjects * 100}% shipped</span>< br/>
+                            <span>{extraInformation.totalShips === 0 ? 0 : (extraInformation.totalShips / extraInformation.totalProjects * 100).toFixed(1)}% shipped</span>< br/>
                             <span><b>TODO:</b> Top project</span>
                         </section>
                         <section id="stats-devlogs">
-                            <h3>Devlogs</h3>
+                            <h2>Devlogs</h2>
                             <span>{extraInformation.totalDevlogs} devlogs</span>
                             <span>{(extraInformation.totalChars / extraInformation.totalDevlogs).toFixed(1)} chars/avg</span><br />
                             <span>{(extraInformation.totalWords / extraInformation.totalDevlogs).toFixed(1)} words/avg</span><br />
