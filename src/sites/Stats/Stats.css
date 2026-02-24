@@ -29,14 +29,34 @@
 
     & > main {
         display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
 
-        & > section {
+        & .stats-row {
             display: flex;
-            flex-direction: column;
-            
-            & > h2 {
-                color: var(--text-2);
+            gap: 30px;
+
+            & > section {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                
+                & > h2 {
+                    color: var(--text-2);
+                }
+
+                & > div:not(.card) {
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    gap: 20px;
+
+                    & > div {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px 20px;
+                    }
+                }
             }
         }
     }
@@ -59,3 +79,46 @@
     }
 }
 
+#projects-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    width: fit-content;
+
+    @media (max-width: 600px) {
+        display: flex !important;
+    }
+}
+
+#top-project > .card {
+    width: 364px;
+    padding: 10px;
+    align-items: flex-start;
+    overflow: scroll;
+    gap: 0;
+
+    & > .divider {
+        margin: 5px 0;
+    }
+    
+    & > #top-project-title {
+        color: var(--text-2);
+        font-size: 30px;
+    }
+
+    & > #top-project-description {
+        color: var(--text-3);
+        font-size: 22px;
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+
+    & #top-project-stats {
+        color: var(--text-2);
+        font-size: 22px;
+        line-height: 100%;
+        margin: 0 auto;
+    }
+}

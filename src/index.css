@@ -8,6 +8,7 @@
 
 :root {
   --default-font: "Jua", system-ui;
+  --default-show: 0px 0px 2px 1px rgba(0, 0, 0, .25);
 
   --base: #E7D4B1;
   --overlay: #D7B593;
@@ -27,4 +28,9 @@ button {
   background: unset;
   border: unset;
   cursor: pointer;
+}
+
+.noto-emoji {
+  font-family: "Noto Emoji", system-ui;
+  font-weight: 1000;
 }

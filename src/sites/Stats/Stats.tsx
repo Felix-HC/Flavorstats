@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
 
 import './Stats.css'
@@ -96,44 +97,63 @@ export default function Stats() {
                         </div>
                     </header>
                     <main>
-                        <section id="stats-projects">
-                            <h2>Projects</h2>
-                            {user.totalTimeSeconds >= 3600 ?
-                                <span>{(user.totalTimeSeconds / 60 / 60).toFixed(1)} hours</span>
-                                :
-                                <span>{(user.totalTimeSeconds / 60).toFixed(1)} minutes</span>
-                            }
-                            {user.totalTimeSeconds >= 3600 ?
-                                <span>{(user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours/avg</span>
-                                :
-                                <span>{(user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes/avg</span>
-                            }
-                            <span>{extraInformation.totalProjects} projects</span><br />
-                            <span>{extraInformation.totalAI === 0 ? 0 : extraInformation.totalAI / extraInformation.totalProjects * 100}% AI-Usage</span><br />
-                            <span>{extraInformation.totalShips === 0 ? 0 : (extraInformation.totalShips / extraInformation.totalProjects * 100).toFixed(1)}% shipped</span>< br/>
-                        </section>
-                        <section id="top-project">
-                            <h2>Top Project</h2>
-                            <div>
-                                <h2>{extraInformation.topProject.title}</h2>
-                                <span>{extraInformation.topProject.description}</span>
+                        <div className="stats-row">
+                            <section id="stats-projects">
+                                <h2>Projects</h2>
                                 <div>
-                                    <span>{extraInformation.topProject.devlogs.totalLikes} likes – {extraInformation.topProject.devlogs.total} devlogs – {Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s</span>
+                                    <div>
+                                    <Card
+                                        firstContent="Total Time"
+                                        secondContent={
+                                            user.totalTimeSeconds >= 3600 ?
+                                                `${(user.totalTimeSeconds / 60 / 60).toFixed(1)} hours`
+                                                :
+                                                `${(user.totalTimeSeconds / 60).toFixed(1)} minutes`
+                                        }
+                                    />
+                                    <Card
+                                        firstContent="Avg. Time"
+                                        secondContent={
+                                            user.totalTimeSeconds >= 3600 ?
+                                                `${(user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours`
+                                                :
+                                                `${(user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes`
+                                        }
+                                    />
+                                    </div>
+                                    <div id="projects-grid">
+                                        <Card
+                                            firstContent={`${extraInformation.totalProjects} projects`}
+                                        />
+                                        <Card
+                                            firstContent={`${extraInformation.totalAI === 0 ? 0 : extraInformation.totalAI / extraInformation.totalProjects * 100}% AI`}
+                                        />
+                                        <Card
+                                            firstContent={`${extraInformation.totalShips} ships`}
+                                        />
+                                        <Card
+                                            firstContent={`${extraInformation.totalShips === 0 ? 0 : (extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </section>
-                        <section id="stats-devlogs">
-                            <h2>Devlogs</h2>
-                            <span>{extraInformation.totalDevlogs} devlogs</span>
-                            <span>{(extraInformation.totalChars / extraInformation.totalDevlogs).toFixed(1)} chars/avg</span><br />
-                            <span>{(extraInformation.totalWords / extraInformation.totalDevlogs).toFixed(1)} words/avg</span><br />
-                            <span>Most used word: {user.mostUsedWords[0][0]}</span><br />
+                            </section>
+                            <section id="top-project">
+                                <h2>Top Project</h2>
+                                <div className="card">
+                                    <span id="top-project-title"><span className="noto-emoji">✨</span> {extraInformation.topProject.title}</span>
+                                    <span id="top-project-description">{extraInformation.topProject.description}</span>
+                                    <div className="divider" />
+                                    <span id="top-project-stats"><span>{extraInformation.topProject.devlogs.totalLikes} likes – {extraInformation.topProject.devlogs.total} devlogs – {Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s</span></span>
+                                </div>
+                                <span>{(extraInformation.totalWords / extraInformation.totalDevlogs).toFixed(1)} words/avg</span><br />
+                                <span>Most used word: {user.mostUsedWords[0][0]}</span><br />
 
-                            <span>{extraInformation.totalLikes} likes</span><br/>
-                            <span>{extraInformation.totalChars} chars</span><br />
-                            <span>{extraInformation.totalWords} words</span><br />
-                            <span>{extraInformation.totalComments} comments</span><br />
-                        </section>
+                                <span>{extraInformation.totalLikes} likes</span><br/>
+                                <span>{extraInformation.totalChars} chars</span><br />
+                                <span>{extraInformation.totalWords} words</span><br />
+                                <span>{extraInformation.totalComments} comments</span><br />
+                            </section>
+                        </div>
                     </main>
                 </>
             }
