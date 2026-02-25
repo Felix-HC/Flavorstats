@@ -180,13 +180,13 @@ export default function Stats() {
                                             firstContent={`${extraInformation.totalProjects} projects`}
                                         />
                                         <Card
-                                            firstContent={`${extraInformation.totalAI === 0 ? 0 : extraInformation.totalAI / extraInformation.totalProjects * 100}% AI`}
+                                            firstContent={`${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`}
                                         />
                                         <Card
                                             firstContent={`${extraInformation.totalShips} ships`}
                                         />
                                         <Card
-                                            firstContent={`${extraInformation.totalShips === 0 ? 0 : (extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
+                                            firstContent={`${extraInformation.totalShips === 0 ? 0 : Math.floor(extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
                                         />
                                     </div>
                                 </div>
