@@ -77,7 +77,7 @@ export default function Stats() {
             const dates = project.devlogs.dates;
             dates.forEach((date: any) => {
                 const shortDate: string = date.date.split("T")[0];
-                datesMap.set(shortDate, (datesMap.get(shortDate) || 0) + date.timeLogged);
+                date.timeLogged !== 0 && datesMap.set(shortDate, (datesMap.get(shortDate) || 0) + date.timeLogged);
             });
         });
         allDates.forEach((date: Date) => {
