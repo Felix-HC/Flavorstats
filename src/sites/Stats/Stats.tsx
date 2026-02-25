@@ -233,7 +233,7 @@ export default function Stats() {
                                     <div id="heatmap-grid">
                                         {
                                             [...extraInformation.loggedTimeArray.entries()].map((devlog, index) => {
-                                                return <div className={devlog[0]} key={index} style={{opacity: devlog[1] / extraInformation.longestDevlog}} />
+                                                return <div className={devlog[0]} key={index} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1] / extraInformation.longestDevlog) * 100}%, transparent ${100 - (devlog[1] / extraInformation.longestDevlog) * 100}%)`}} />
                                             })
                                         }
                                     </div>
