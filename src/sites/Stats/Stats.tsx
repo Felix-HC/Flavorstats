@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { calcTime } from '../../utils';
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
 
 import './Stats.css'
-import { calcTime } from '../../utils';
 
 export default function Stats() {
     const [user, setUser] = useState<any | undefined>(undefined);
@@ -82,25 +82,26 @@ export default function Stats() {
         }
 
         // Get devlog dates + logged time on that date
-        const datesMap: Map<string, number> = new Map(); // The number is the time logged **ON** that date! (in seconds)
+        const datesMap: Map<string, Array<number>> = new Map(); // The number is the time logged **ON** that date! (in seconds)
         projects.forEach((project: any) => {
             const dates = project.devlogs.dates;
             dates.forEach((date: any) => {
                 const shortDate: string = date.date.split("T")[0];
-                date.timeLogged !== 0 && datesMap.set(shortDate, (datesMap.get(shortDate) || 0) + date.timeLogged);
+                date.timeLogged !== 0 && datesMap.set(shortDate, [(datesMap.get(shortDate)?.[0] || 0) + 1, (datesMap.get(shortDate)?.[1] || 0) + date.timeLogged]);
             });
         });
         allDates.forEach((date: Date) => {
             const shortDate: string = date.toISOString().split("T")[0];
-            datesMap.get(shortDate) === undefined && datesMap.set(shortDate, 0);
+            datesMap.get(shortDate) === undefined && datesMap.set(shortDate, [0, 0]);
         });
         
         const sortedDatesMap = new Map([...datesMap.entries()].sort((a: any, b: any) => {
             return new Date(a[0]).getTime() - new Date(b[0]).getTime();
         }));
-        // Get longest devlog (time) so I can colorize with that as 100% opacity
-        const sortedDatesByTime = [...datesMap.values()].sort((a: any, b: any) => {
-            return b - a;
+
+        // Get date with most amount of devlogs so I can colorize with that as 100% opacity
+        const sortedDatesByAmount = [...datesMap.values()].sort((a: any, b: any) => {
+            return b[0] - a[0];
         });
         
         // Sort dates
@@ -125,9 +126,10 @@ export default function Stats() {
             latestYear: creationDates[creationDates.length - 1].getFullYear(),
             topProject: topProject,
             loggedTimeArray: sortedDatesMap,
-            longestDevlog: sortedDatesByTime[0]
+            mostDevlogs: sortedDatesByAmount[0]
         }
 
+        console.log(extraInformation);
         setExtraInformation(extraInformation);
     }
 
@@ -243,7 +245,7 @@ export default function Stats() {
                                     <div id="heatmap-grid" onMouseLeave={() => setTooltip(undefined)}>
                                         {
                                             [...extraInformation.loggedTimeArray.entries()].map((devlog, index) => {
-                                                return <div key={index} onMouseEnter={() => setTooltip(`${calcTime(devlog[1]).join(" ")} logged`)} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1] / extraInformation.longestDevlog) * 100}%, transparent ${100 - (devlog[1] / extraInformation.longestDevlog) * 100}%)`}} />
+                                                return <div key={index} onMouseEnter={() => setTooltip(`${devlog[1][0]} devlogs (${calcTime(devlog[1][1]).join(" ")})`)} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%, transparent ${100 - (devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%)`}} />
                                             })
                                         }
                                     </div>
