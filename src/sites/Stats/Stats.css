@@ -5,6 +5,7 @@
     background: var(--base);
     font-family: var(--default-font);
     padding: 50px;
+    gap: 30px;
 
     & h1 {
         font-size: 48px;
