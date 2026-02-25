@@ -52,6 +52,46 @@ export default function Stats() {
 
             creationDates.push(new Date(project.creationDate || 0));
         });
+
+        const allDevlogs: Array<any> = [];
+        projects.forEach((project: any) => {
+            allDevlogs.push(...project.devlogs.dates)
+        });
+        allDevlogs.sort((a: any, b: any) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+        });
+
+        allDevlogs.splice(allDevlogs.findIndex((e: any) => e.timeLogged === 0), 1);
+
+        const earliestDevlogDate = new Date(allDevlogs[0].date);
+        const latestDevlogDate = new Date(allDevlogs[allDevlogs.length - 1].date);
+        const dayMillisec = 24 * 60 * 60 * 1000; // A day in milliseconds
+        const allDates = [];
+        for (let i = earliestDevlogDate; i < latestDevlogDate; i = new Date(i.getTime() + dayMillisec)) {
+            allDates.push(i);
+        }
+
+        // Get devlog dates + logged time on that date
+        const datesMap: Map<string, number> = new Map(); // The number is the time logged **ON** that date! (in seconds)
+        projects.forEach((project: any) => {
+            const dates = project.devlogs.dates;
+            dates.forEach((date: any) => {
+                const shortDate: string = date.date.split("T")[0];
+                datesMap.set(shortDate, (datesMap.get(shortDate) || 0) + date.timeLogged);
+            });
+        });
+        allDates.forEach((date: Date) => {
+            const shortDate: string = date.toISOString().split("T")[0];
+            datesMap.get(shortDate) === undefined && datesMap.set(shortDate, 0);
+        });
+        
+        const sortedDatesMap = new Map([...datesMap.entries()].sort((a: any, b: any) => {
+            return new Date(a[0]).getTime() - new Date(b[0]).getTime();
+        }));
+        // Get longest devlog (time) so I can colorize with that as 100% opacity
+        const sortedDatesByTime = [...datesMap.values()].sort((a: any, b: any) => {
+            return b - a;
+        });
         
         // Sort dates
         creationDates.sort((a: any, b: any) => {
@@ -73,7 +113,9 @@ export default function Stats() {
             totalWords: totalWords,
             earliestYear: creationDates[0].getFullYear(),
             latestYear: creationDates[creationDates.length - 1].getFullYear(),
-            topProject: topProject
+            topProject: topProject,
+            loggedTimeArray: sortedDatesMap,
+            longestDevlog: sortedDatesByTime[0]
         }
 
         setExtraInformation(extraInformation);
@@ -182,6 +224,18 @@ export default function Stats() {
                                         <Card
                                             firstContent={`${extraInformation.totalWords} words`}
                                         />
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <h2>Heatmap</h2>
+                                <div id="heatmap">
+                                    <div id="heatmap-grid">
+                                        {
+                                            [...extraInformation.loggedTimeArray.entries()].map((devlog, index) => {
+                                                return <div className={devlog[0]} key={index} style={{opacity: devlog[1] / extraInformation.longestDevlog}} />
+                                            })
+                                        }
                                     </div>
                                 </div>
                             </section>
