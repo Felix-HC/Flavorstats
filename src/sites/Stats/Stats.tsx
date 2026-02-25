@@ -73,8 +73,8 @@ export default function Stats() {
 
         allDevlogs.splice(allDevlogs.findIndex((e: any) => e.timeLogged === 0), 1);
 
-        const earliestDevlogDate = new Date(allDevlogs[0].date);
-        const latestDevlogDate = new Date(allDevlogs[allDevlogs.length - 1].date);
+        const earliestDevlogDate = new Date(allDevlogs[0]?.date);
+        const latestDevlogDate = new Date(allDevlogs[allDevlogs.length - 1]?.date);
         const dayMillisec = 24 * 60 * 60 * 1000; // A day in milliseconds
         const allDates = [];
         for (let i = earliestDevlogDate; i < latestDevlogDate; i = new Date(i.getTime() + dayMillisec)) {
