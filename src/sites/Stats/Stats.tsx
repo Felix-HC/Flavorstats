@@ -3,11 +3,15 @@ import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
 
 import './Stats.css'
+import { calcTime } from '../../utils';
 
 export default function Stats() {
     const [user, setUser] = useState<any | undefined>(undefined);
     const [extraInformation, setExtraInformation] = useState<any | undefined>(undefined);
     const [error, setError] = useState<string | undefined>(undefined);
+    const [tooltip, setTooltip] = useState<string | undefined>(undefined);
+    const [mouseX, setMouseX] = useState<number>(0);
+    const [mouseY, setMouseY] = useState<number>(0);
 
     const params = new URLSearchParams(document.location.search);
     const userID = params.get("user");
@@ -26,6 +30,12 @@ export default function Stats() {
                     setError("Could not fetch user statistics");
                 });
         }
+
+        window.addEventListener("mousemove", (ev: MouseEvent) => {
+            setMouseX(ev.clientX);
+            setMouseY(ev.clientY);
+        });
+
         hasMounted.current = true;
     }, []);
 
@@ -230,10 +240,10 @@ export default function Stats() {
                             <section>
                                 <h2>Heatmap</h2>
                                 <div id="heatmap">
-                                    <div id="heatmap-grid">
+                                    <div id="heatmap-grid" onMouseLeave={() => setTooltip(undefined)}>
                                         {
                                             [...extraInformation.loggedTimeArray.entries()].map((devlog, index) => {
-                                                return <div className={devlog[0]} key={index} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1] / extraInformation.longestDevlog) * 100}%, transparent ${100 - (devlog[1] / extraInformation.longestDevlog) * 100}%)`}} />
+                                                return <div key={index} onMouseEnter={() => setTooltip(`${calcTime(devlog[1]).join(" ")} logged`)} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1] / extraInformation.longestDevlog) * 100}%, transparent ${100 - (devlog[1] / extraInformation.longestDevlog) * 100}%)`}} />
                                             })
                                         }
                                     </div>
@@ -241,6 +251,7 @@ export default function Stats() {
                             </section>
                         </div>
                     </main>
+                    {tooltip !== undefined && <div id="tooltip" style={{left: mouseX + 10, top: mouseY - 30}}><span>{tooltip}</span></div>}
                 </>
             }
         </div>
