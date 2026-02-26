@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { calcTime } from '../../utils';
+import { Download } from 'lucide-react';
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
 
@@ -252,6 +253,13 @@ export default function Stats() {
                                 </div>
                             </section>
                         </div>
+                        <button id="download-card-btn">
+                            <span>Download Card</span>
+                            <Download
+                                size={32}
+                                strokeWidth={2.2}
+                            />
+                        </button>
                     </main>
                     {tooltip !== undefined && <div id="tooltip" style={{left: mouseX + 10, top: mouseY - 30}}><span>{tooltip}</span></div>}
                 </>

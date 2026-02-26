@@ -169,3 +169,22 @@
     border-radius: 8px;
     color: var(--text-2);
 }
+
+#download-card-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--default-font);
+    color: var(--text);
+    background: var(--text-2);
+    border: 3px solid var(--text-4);
+    font-size: 28px;
+    width: fit-content;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: .2s ease background;
+
+    &:hover {
+        background: color-mix(in srgb, var(--text-2) 100%, var(--base) 3%);
+    }
+}
