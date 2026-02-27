@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { calcTime } from '../../utils';
+import { calcTime, generateCard } from '../../utils';
 import { Download } from 'lucide-react';
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
@@ -253,7 +253,7 @@ export default function Stats() {
                                 </div>
                             </section>
                         </div>
-                        <button id="download-card-btn">
+                        <button id="download-card-btn" onClick={() => generateCard(user, extraInformation)}>
                             <span>Download Card</span>
                             <Download
                                 size={32}
