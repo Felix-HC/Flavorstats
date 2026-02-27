@@ -138,7 +138,7 @@ export default function Stats() {
 
     return (
         <div id="stats">
-            {(user === undefined && extraInformation !== undefined) && <span>Loading...</span>}
+            {(user === undefined && extraInformation === undefined) && <span>Loading...</span>}
             {(user !== undefined && extraInformation !== undefined) &&
                 <>
                     <header>
