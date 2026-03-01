@@ -53,6 +53,16 @@ export async function generateCard(information: any, extraInformation: any) {
             image.src = ChefHat;
             ctx.drawImage(image, 20, -20, 200, 200);
 
+            // Draw name
+            ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
+            ctx.textBaseline = "middle";
+            ctx.font = "54px Jua";
+            ctx.fillText(`${information.displayName}'s Flavortown`, 275, 136);
+
+            // Draw years
+            ctx.font = "24px Jua";
+            ctx.fillText(`${extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear}/${extraInformation.latestYear}`, 275, 179);
+
             // Download
             const a: HTMLAnchorElement = document.createElement("a"); 
             a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
