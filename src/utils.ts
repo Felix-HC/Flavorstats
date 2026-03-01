@@ -61,11 +61,15 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.fillText(`${extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear}/${extraInformation.latestYear}`, 275, 179);
 
             /// Projects
-            // Draw Total Time
             ctx.font = "32px Jua";
+            // Draw total time / avg. time / amount of projects / number of ships
             ctx.fillText("Projects", 62.5, 280)
             drawCard(ctx, 62.5, 305, "Total Time", information.totalTimeSeconds >= 3600 ? `${(information.totalTimeSeconds / 60 / 60).toFixed(1)} hours` : `${(information.totalTimeSeconds / 60).toFixed(1)} minutes`);
+            drawCard(ctx, 62.5 + 225 + 20, 305, "Avg. Time", information.totalTimeSeconds >= 3600 ? `${(information.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours` : `${(information.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes`);
+            drawCard(ctx, 62.5, 305 + 116 + 20, `${extraInformation.totalProjects} projects`);
+            drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20, `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`)
 
+            // Draw Total 
             // Download
             const a: HTMLAnchorElement = document.createElement("a"); 
             a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
@@ -76,7 +80,6 @@ export async function generateCard(information: any, extraInformation: any) {
 }
 
 function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstContent?: string, secondContent?: string) {
-    console.log(x, y, firstContent, secondContent);
     const size = (firstContent && secondContent) ? "large" : "small";
 
     // Draw Rectangle
