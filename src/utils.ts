@@ -1,5 +1,7 @@
 import ChefHat from "./assets/chef-hat.webp";
 
+const cssStyles = getComputedStyle(document.body);
+
 export function calcTime(seconds: number) {
     const returnArray: Array<string> = [];
     
@@ -14,9 +16,6 @@ export function calcTime(seconds: number) {
 }
 
 export async function generateCard(information: any, extraInformation: any) {
-    console.log(information);
-    console.log(extraInformation);
-
     const canvas: HTMLCanvasElement = document.createElement("canvas");
     canvas.height = 1000;
     canvas.width = 1000;
@@ -25,8 +24,6 @@ export async function generateCard(information: any, extraInformation: any) {
 
     if (ctx !== null) {
         // Set background color
-        const cssStyles = getComputedStyle(document.body);
-
         ctx.fillStyle = cssStyles.getPropertyValue("--base");
         ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -63,6 +60,12 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.font = "24px Jua";
             ctx.fillText(`${extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear}/${extraInformation.latestYear}`, 275, 179);
 
+            /// Projects
+            // Draw Total Time
+            ctx.font = "32px Jua";
+            ctx.fillText("Projects", 62.5, 280)
+            drawCard(ctx, 62.5, 305, "Total Time", information.totalTimeSeconds >= 3600 ? `${(information.totalTimeSeconds / 60 / 60).toFixed(1)} hours` : `${(information.totalTimeSeconds / 60).toFixed(1)} minutes`);
+
             // Download
             const a: HTMLAnchorElement = document.createElement("a"); 
             a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
@@ -70,4 +73,45 @@ export async function generateCard(information: any, extraInformation: any) {
             a.click();
         }
     }    
+}
+
+function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstContent?: string, secondContent?: string) {
+    console.log(x, y, firstContent, secondContent);
+    const size = (firstContent && secondContent) ? "large" : "small";
+
+    // Draw Rectangle
+    ctx.shadowColor = "#00000040";
+    ctx.shadowBlur = 2;
+    ctx.fillStyle = cssStyles.getPropertyValue("--overlay-2");
+    ctx.beginPath();
+    ctx.roundRect(x, y, 225, size === "large" ? 116 : 63, 8);
+    ctx.stroke();
+    ctx.fill();
+
+    // Draw Text
+    ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
+    let textWidth;
+    switch(size) {
+        case "small":
+            textWidth = ctx.measureText(firstContent || "").width;
+            ctx.fillText(firstContent || "", x + (225 - textWidth) / 2, y + 31.5); // firstContent should never be undefined here, but I'm not gonna risk it for the biscuit (there is no biscuit)
+            break;
+        case "large":
+            // Draw stroke in the middle
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = cssStyles.getPropertyValue("--text-2");
+            ctx.moveTo(x + 20, y + 58);
+            ctx.lineTo(x + 225 - 20, y + 58);
+            ctx.stroke();
+
+            // Draw firstContent
+            textWidth = ctx.measureText(firstContent || "").width;
+            ctx.fillText(firstContent || "", x + (225 - textWidth) / 2, y + 58 / 2);
+
+            // Draw secondContent
+            ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
+            textWidth = ctx.measureText(secondContent || "").width;
+            ctx.fillText(secondContent || "", x + (225 - textWidth) / 2, y + 116 - 58 / 2)
+    }
 }
