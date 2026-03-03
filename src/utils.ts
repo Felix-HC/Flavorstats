@@ -70,20 +70,25 @@ export async function generateCard(information: any, extraInformation: any) {
             drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20, `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`)
 
             // Draw Top Projet
-            drawCard(ctx, 552.5, 305, undefined, undefined, 375, 200);
+            const topX = 552.5;
+            const topY = 305;
+            const topWidth = 375;
+            const topHeight = 200;
+
+            drawCard(ctx, topX, topY, undefined, undefined, topWidth, topHeight);
             ctx.textBaseline = "middle";
             ctx.font = "1000 32px Noto Emoji";
-            ctx.fillText("✨", 562.5, 336);
+            ctx.fillText("✨", topX + 10, topY + 31);
             ctx.font = "32px Jua";
 
             // Title
             let topProjectTitle: string = extraInformation.topProject.title;
             const topProjectTitleTextWidth: number = ctx.measureText(topProjectTitle).width;
-            if (topProjectTitleTextWidth > 355) {
+            if (topProjectTitleTextWidth > topWidth - 20) {
                 const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
-                topProjectTitle = `${topProjectTitle.substring(0, Math.floor(355 / charWidth) - 4)}...`;
+                topProjectTitle = `${topProjectTitle.substring(0, Math.floor(topWidth - 20 / charWidth) - 4)}...`;
             }
-            ctx.fillText(topProjectTitle, 612.5, 337, 355);
+            ctx.fillText(topProjectTitle, topX + 40 + 20, topY + 32, topWidth - 20);
             // Description
             ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
             ctx.font = "24px Jua";
@@ -94,7 +99,7 @@ export async function generateCard(information: any, extraInformation: any) {
                 const topDescLineWidth = ctx.measureText(topDescLines[topDescLine] + word).width;
                 if (topDescLines[topDescLine] === undefined) {
                     topDescLines[topDescLine] = word;
-                } else if (topDescLineWidth < 355) {
+                } else if (topDescLineWidth < topWidth - 20) {
                     topDescLines[topDescLine] = topDescLines[topDescLine] += ` ${word}`;
                 } else {
                     topDescLine++;
@@ -103,13 +108,13 @@ export async function generateCard(information: any, extraInformation: any) {
             });
             for (let i = 0; i < 3; i++) {
                 const lineText = i !== 2 ? topDescLines[i] : `${topDescLines[i].substring(0, topDescLines[i].length - 3)}...`;
-                ctx.fillText(lineText, 562.5, 377 + i * 30, 355);
+                ctx.fillText(lineText, topX + 10, topY + 72 + i * 30, topWidth - 20);
             }
             // Divider
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(562.5, 460);
-            ctx.lineTo(917.5, 460);
+            ctx.moveTo(topX + 10, 460);
+            ctx.lineTo(topX + topWidth - 20, 460);
             ctx.stroke();
             ctx.closePath();
             // Stats
@@ -117,8 +122,8 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.fillStyle = cssStyles.getPropertyValue("--text-2")
             ctx.fillText(
                 `${extraInformation.topProject.devlogs.totalLikes} likes – ${extraInformation.topProject.devlogs.total} devlogs – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
-                562.5,
-                475
+                topX + 10,
+                topY + 170
             );
 
             // Download
