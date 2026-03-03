@@ -64,6 +64,7 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.font = "32px Jua";
             // Draw total time / avg. time / amount of projects / number of ships
             ctx.fillText("Projects", 62.5, 280)
+
             drawCard(ctx, 62.5, 305,
                 "Total Time",
                 information.totalTimeSeconds >= 3600 ? `${(information.totalTimeSeconds / 60 / 60).toFixed(1)} hours` : `${(information.totalTimeSeconds / 60).toFixed(1)} minutes`
@@ -141,6 +142,42 @@ export async function generateCard(information: any, extraInformation: any) {
                 topX + 10,
                 topY + 170
             );
+            ctx.textBaseline = "middle";
+
+            /// Devlogs
+            ctx.font = "32px Jua";
+            // Draw total time / avg. time / amount of projects / number of ships
+            ctx.fillText("Devlogs", 62.5, 550);
+            drawCard(ctx, 62.5, 575,
+                "Total Logs",
+                `${extraInformation.totalDevlogs} devlogs`
+            );
+
+            drawCard(ctx, 62.5 + 225 + 20, 575,
+                "Avg. Chars",
+                `${Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs)} chars`
+            );
+
+            drawCard(ctx, 62.5 + ((225 + 20) * 2), 575,
+                "Fav. Word",
+                `"${information.mostUsedWords[0][0]}"`
+            );
+            
+            drawCard(ctx, 62.5, 575 + 116 + 20,
+                `${extraInformation.totalLikes} likes`
+            );
+
+            drawCard(ctx, 62.5, 575 + 116 + 63 + 40,
+                `${extraInformation.totalComments} comments`
+            );
+
+            drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 20,
+                `${extraInformation.totalChars} chars`
+            );
+
+            drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 63 + 40,
+                `${extraInformation.totalWords} words`
+            );
 
             // Download
             const a: HTMLAnchorElement = document.createElement("a"); 
@@ -162,6 +199,7 @@ function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstCont
     ctx.shadowColor = "#00000040";
     ctx.shadowBlur = 2;
     ctx.fillStyle = cssStyles.getPropertyValue("--overlay-2");
+    ctx.textBaseline = "middle";
     ctx.beginPath();
     ctx.roundRect(x, y, width, height, 8);
     ctx.stroke();
