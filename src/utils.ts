@@ -69,7 +69,9 @@ export async function generateCard(information: any, extraInformation: any) {
             drawCard(ctx, 62.5, 305 + 116 + 20, `${extraInformation.totalProjects} projects`);
             drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20, `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`)
 
-            // Draw Total 
+            // Draw Top Projet
+            drawCard(ctx, 307.5 + 225 + 20, 305, undefined, undefined, 375, 200);
+
             // Download
             const a: HTMLAnchorElement = document.createElement("a"); 
             a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
@@ -79,15 +81,19 @@ export async function generateCard(information: any, extraInformation: any) {
     }    
 }
 
-function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstContent?: string, secondContent?: string) {
-    const size = (firstContent && secondContent) ? "large" : "small";
+function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstContent?: string, secondContent?: string, width?: number, height?: number) {
+    const size = (firstContent && secondContent) ? "large" : (firstContent || secondContent) ? "small" : "custom";
+    width = width || 225;
+    height = height || 63;
+
+    if (size === "large") height = 116; 
 
     // Draw Rectangle
     ctx.shadowColor = "#00000040";
     ctx.shadowBlur = 2;
     ctx.fillStyle = cssStyles.getPropertyValue("--overlay-2");
     ctx.beginPath();
-    ctx.roundRect(x, y, 225, size === "large" ? 116 : 63, 8);
+    ctx.roundRect(x, y, width, height, 8);
     ctx.stroke();
     ctx.fill();
 
