@@ -220,7 +220,7 @@ export default function Stats() {
                                             secondContent={`${Math.floor(extraInformation.totalWords / extraInformation.totalDevlogs)} words`}
                                         />
                                         <Card
-                                            firstContent="Fav. Words"
+                                            firstContent="Fav. Word"
                                             secondContent={`"${user.mostUsedWords[0][0]}"`}
                                         />
                                     </div>
