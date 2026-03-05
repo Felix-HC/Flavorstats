@@ -210,7 +210,7 @@ function drawHeatmap(ctx: CanvasRenderingContext2D, extraInformation: any, x: nu
     const columns = Math.ceil(points.length / rows);
     const maxDevlogs = extraInformation.mostDevlogs[0];
 
-    const width = 30 + (columns * 35);
+    const width = 30 + (columns * 35) > 375 ? 30 + (columns * 35) : 375;
     drawCard(ctx, x, y, undefined, undefined, width, 200);
 
     ctx.strokeStyle = cssStyles.getPropertyValue("--overlay");
