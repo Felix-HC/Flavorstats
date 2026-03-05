@@ -115,7 +115,6 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
             for (let i = 0; i < topDescLines.length; i++) {
                 const lineText = i !== 2 ? topDescLines[i] : `${topDescLines[i].substring(0, topDescLines[i].length - 3)}...`;
-                console.log(ctx.fillStyle);
                 ctx.fillText(lineText, topX + 10, topY + 72 + i * 30, topWidth - 20);
             }
 
@@ -185,13 +184,48 @@ export async function generateCard(information: any, extraInformation: any) {
                 `${extraInformation.totalWords} words`
             );
 
+            /// Heatmap
+            drawHeatmap(ctx, extraInformation, 62.5 + ((225 + 20) * 2), 575 + 116 + 20);
+
             // Download
             const a: HTMLAnchorElement = document.createElement("a"); 
             a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
             a.href = canvas.toDataURL();
             a.click();
         }
-    }    
+    }
+}
+
+function drawHeatmap(ctx: CanvasRenderingContext2D, extraInformation: any, x: number, y: number) {
+    const points: Array<number> = [];
+    [...extraInformation.loggedTimeArray.entries()].forEach((date) => {
+        points.push(date[1][0]);
+    });
+    if (points.length > 11 * 5) {
+        points.splice(12, points.length - 11 * 5);
+    }
+
+    const rows = 5;
+    const columns = Math.ceil(points.length / rows);
+    const maxDevlogs = extraInformation.mostDevlogs[0];
+
+    const width = 30 + (columns * 35);
+    drawCard(ctx, x, y, undefined, undefined, width, 200);
+
+    ctx.strokeStyle = cssStyles.getPropertyValue("--overlay");
+    ctx.lineWidth = .5;
+
+    points.forEach((point, index) => {
+        const pointX = (x + 15) + Math.floor(index / rows) * 35;
+        const pointY = (y + 15) + Math.floor(index % rows) * 35;
+
+        ctx.fillStyle = hexToRGBA(cssStyles.getPropertyValue("--green"), point / maxDevlogs);
+        ctx.beginPath();
+        ctx.roundRect(pointX, pointY, 30, 30, 4);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+    });
 }
 
 function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstContent?: string, secondContent?: string, width?: number, height?: number) {
@@ -238,5 +272,17 @@ function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstCont
             ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
             textWidth = ctx.measureText(secondContent || "").width;
             ctx.fillText(secondContent || "", x + (225 - textWidth) / 2, y + 116 - 58 / 2)
+    }
+}
+
+function hexToRGBA(hex: string, alpha?: number) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+
+    if (alpha !== undefined) {
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    } else {
+        return `rgba(${r}, ${g}, ${b})`;
     }
 }
