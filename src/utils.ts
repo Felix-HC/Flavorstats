@@ -86,29 +86,11 @@ export async function generateCard(information: any, extraInformation: any) {
                 `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`
             );
 
-            // Draw Top Projet
+            /// Draw Top Project
             const topX = 552.5;
             const topY = 305;
             const topWidth = 375;
-            const topHeight = 200;
-
-            drawCard(ctx, topX, topY, undefined, undefined, topWidth, topHeight);
-            ctx.textBaseline = "middle";
-            ctx.font = "1000 32px Noto Emoji";
-            ctx.fillText("✨", topX + 10, topY + 31);
-            ctx.font = "32px Jua";
-
-            // Title
-            let topProjectTitle: string = extraInformation.topProject.title;
-            const topProjectTitleTextWidth: number = ctx.measureText(topProjectTitle).width;
-            if (topProjectTitleTextWidth > topWidth - 20) {
-                const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
-                topProjectTitle = `${topProjectTitle.substring(0, Math.floor(topWidth - 20 / charWidth) - 4)}...`;
-            }
-            ctx.fillText(topProjectTitle, topX + 40 + 20, topY + 32, topWidth - 20);
             // Description
-            ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
-            ctx.font = "24px Jua";
             const topDescLines: Array<string> = [];
             const topDesc: Array<string> = (extraInformation.topProject.description).split(" ");
             let topDescLine: number = 0;
@@ -123,26 +105,48 @@ export async function generateCard(information: any, extraInformation: any) {
                     topDescLines[topDescLine] = word;
                 }
             });
-
             topDescLines.splice(3);
+
+            const topHeight = 125 + (24 * topDescLines.length);
+            drawCard(ctx, topX, topY, undefined, undefined, topWidth, topHeight);
+
+            ctx.textBaseline = "middle";
+            ctx.font = "24px Jua";
+            ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
             for (let i = 0; i < topDescLines.length; i++) {
                 const lineText = i !== 2 ? topDescLines[i] : `${topDescLines[i].substring(0, topDescLines[i].length - 3)}...`;
+                console.log(ctx.fillStyle);
                 ctx.fillText(lineText, topX + 10, topY + 72 + i * 30, topWidth - 20);
             }
+
+            // Title
+            ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
+            ctx.font = "1000 32px Noto Emoji";
+            ctx.fillText("✨", topX + 10, topY + 31);
+            ctx.font = "32px Jua";
+            
+            let topProjectTitle: string = extraInformation.topProject.title;
+            const topProjectTitleTextWidth: number = ctx.measureText(topProjectTitle).width;
+            if (topProjectTitleTextWidth > topWidth - 20) {
+                const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
+                topProjectTitle = `${topProjectTitle.substring(0, Math.floor(topWidth - 20 / charWidth) - 4)}...`;
+            }
+            ctx.fillText(topProjectTitle, topX + 40 + 20, topY + 32, topWidth - 20);
+
             // Divider
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(topX + 10, 460);
-            ctx.lineTo(topX + topWidth - 20, 460);
+            ctx.moveTo(topX + 10, topY + topHeight - 45);
+            ctx.lineTo(topX + topWidth - 20, topY + topHeight - 45);
             ctx.stroke();
             ctx.closePath();
             // Stats
             ctx.textBaseline = "hanging";
-            ctx.fillStyle = cssStyles.getPropertyValue("--text-2")
+            ctx.font = "24px Jua";
             ctx.fillText(
                 `${extraInformation.topProject.devlogs.totalLikes} likes – ${extraInformation.topProject.devlogs.total} devlogs – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
                 topX + 10,
-                topY + 170
+                topY + topHeight - 30
             );
             ctx.textBaseline = "middle";
 
