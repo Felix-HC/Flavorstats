@@ -145,7 +145,8 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.fillText(
                 `${extraInformation.topProject.devlogs.totalLikes} likes – ${extraInformation.topProject.devlogs.total} devlogs – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
                 topX + 10,
-                topY + topHeight - 30
+                topY + topHeight - 30,
+                topWidth - 20
             );
             ctx.textBaseline = "middle";
 
@@ -252,7 +253,7 @@ function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstCont
     switch(size) {
         case "small":
             textWidth = ctx.measureText(firstContent || "").width;
-            ctx.fillText(firstContent || "", x + (225 - textWidth) / 2, y + 31.5); // firstContent should never be undefined here, but I'm not gonna risk it for the biscuit (there is no biscuit)
+            ctx.fillText(firstContent || "", x + (225 - textWidth) / 2, y + 31.5, 255 - 10); // firstContent should never be undefined here, but I'm not gonna risk it for the biscuit (there is no biscuit)
             break;
         case "large":
             // Draw stroke in the middle
@@ -266,12 +267,12 @@ function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstCont
 
             // Draw firstContent
             textWidth = ctx.measureText(firstContent || "").width;
-            ctx.fillText(firstContent || "", x + (225 - textWidth) / 2, y + 58 / 2);
+            ctx.fillText(firstContent || "", x + (225 - textWidth) / 2, y + 58 / 2, 255 - 10);
 
             // Draw secondContent
             ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
             textWidth = ctx.measureText(secondContent || "").width;
-            ctx.fillText(secondContent || "", x + (225 - textWidth) / 2, y + 116 - 58 / 2)
+            ctx.fillText(secondContent || "", x + (225 - textWidth) / 2, y + 116 - 58 / 2, 255 - 10)
     }
 }
 
