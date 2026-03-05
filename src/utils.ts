@@ -123,7 +123,9 @@ export async function generateCard(information: any, extraInformation: any) {
                     topDescLines[topDescLine] = word;
                 }
             });
-            for (let i = 0; i < 3; i++) {
+
+            topDescLines.splice(3);
+            for (let i = 0; i < topDescLines.length; i++) {
                 const lineText = i !== 2 ? topDescLines[i] : `${topDescLines[i].substring(0, topDescLines[i].length - 3)}...`;
                 ctx.fillText(lineText, topX + 10, topY + 72 + i * 30, topWidth - 20);
             }
