@@ -140,6 +140,10 @@
         grid-template-rows: repeat(5, 1fr);
         width: fit-content;
         gap: 4px;
+        max-width: 500px;
+        overflow-x: auto;
+        scrollbar-width: thin;
+        direction: rtl;
 
         & > div {
             position: relative;
