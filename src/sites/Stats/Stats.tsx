@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { calcTime, generateCard } from '../../utils';
+import { calcTime, generateCard, pluralize } from '../../utils';
 import { Download } from 'lucide-react';
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
@@ -130,7 +130,6 @@ export default function Stats() {
             mostDevlogs: sortedDatesByAmount[0]
         }
 
-        console.log(extraInformation);
         setExtraInformation(extraInformation);
     }
 
@@ -161,30 +160,30 @@ export default function Stats() {
                                             firstContent="Total Time"
                                             secondContent={
                                                 user.totalTimeSeconds >= 3600 ?
-                                                    `${(user.totalTimeSeconds / 60 / 60).toFixed(1)} hours`
+                                                    pluralize(Number((user.totalTimeSeconds / 60 / 60).toFixed(1)), "hour")
                                                     :
-                                                    `${(user.totalTimeSeconds / 60).toFixed(1)} minutes`
+                                                    pluralize(Number((user.totalTimeSeconds / 60).toFixed(1)), "minute")
                                             }
                                         />
                                         <Card
                                             firstContent="Avg. Time"
                                             secondContent={
                                                 user.totalTimeSeconds >= 3600 ?
-                                                    `${(user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours`
+                                                    pluralize(Number((user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)), "hour")
                                                     :
-                                                    `${(user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes`
+                                                    pluralize(Number((user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)), "minute")
                                             }
                                         />
                                     </div>
                                     <div id="projects-grid">
                                         <Card
-                                            firstContent={`${extraInformation.totalProjects} projects`}
+                                            firstContent={pluralize(extraInformation.totalProjects, "project")}
                                         />
                                         <Card
                                             firstContent={`${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`}
                                         />
                                         <Card
-                                            firstContent={`${extraInformation.totalShips} ships`}
+                                            firstContent={pluralize(extraInformation.totalShips, "project")}
                                         />
                                         <Card
                                             firstContent={`${extraInformation.totalShips === 0 ? 0 : Math.floor(extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
@@ -209,15 +208,15 @@ export default function Stats() {
                                     <div>
                                         <Card
                                             firstContent="Total Logs"
-                                            secondContent={`${extraInformation.totalDevlogs} devlogs`}
+                                            secondContent={pluralize(extraInformation.totalDevlogs, "devlog")}
                                         />
                                         <Card
                                             firstContent="Avg. Chars"
-                                            secondContent={`${Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs)} chars`}
+                                            secondContent={pluralize(Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs), "char")}
                                         />
                                         <Card
                                             firstContent="Avg. Words"
-                                            secondContent={`${Math.floor(extraInformation.totalWords / extraInformation.totalDevlogs)} words`}
+                                            secondContent={pluralize(Math.floor(extraInformation.totalWords / extraInformation.totalDevlogs), "word")}
                                         />
                                         <Card
                                             firstContent="Fav. Word"
@@ -226,16 +225,16 @@ export default function Stats() {
                                     </div>
                                     <div>
                                         <Card
-                                            firstContent={`${extraInformation.totalLikes} likes`}
+                                            firstContent={pluralize(extraInformation.totalLikes, "like")}
                                         />
                                         <Card
-                                            firstContent={`${extraInformation.totalComments} comments`}
+                                            firstContent={pluralize(extraInformation.totalComments, "comment")}
                                         />
                                         <Card
-                                            firstContent={`${extraInformation.totalChars} chars`}
+                                            firstContent={pluralize(extraInformation.totalChars, "char")}
                                         />
                                         <Card
-                                            firstContent={`${extraInformation.totalWords} words`}
+                                            firstContent={pluralize(extraInformation.totalWords, "word")}
                                         />
                                     </div>
                                 </div>
@@ -246,7 +245,7 @@ export default function Stats() {
                                     <div id="heatmap-grid" onMouseLeave={() => setTooltip(undefined)}>
                                         {
                                             [...extraInformation.loggedTimeArray.entries()].map((devlog, index) => {
-                                                return <div key={index} onMouseEnter={() => setTooltip(`${devlog[1][0]} devlogs (${calcTime(devlog[1][1]).join(" ")})`)} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%, transparent ${100 - (devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%)`}} />
+                                                return <div key={index} onMouseEnter={() => setTooltip(`${pluralize(devlog[1][0], "devlog")} (${calcTime(devlog[1][1]).join(" ")})`)} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%, transparent ${100 - (devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%)`}} />
                                             })
                                         }
                                     </div>

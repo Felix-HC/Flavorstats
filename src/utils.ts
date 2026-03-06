@@ -15,6 +15,14 @@ export function calcTime(seconds: number) {
     return returnArray;
 }
 
+export function pluralize(count: number, content: string) {
+    if (count === 1) {
+        return `${count} ${content}`;
+    } else {
+        return `${count} ${content}s`;
+    }
+}
+
 export async function generateCard(information: any, extraInformation: any) {
     const canvas: HTMLCanvasElement = document.createElement("canvas");
     canvas.height = 2000;
