@@ -76,19 +76,19 @@ export async function generateCard(information: any, extraInformation: any) {
 
             drawCard(ctx, 62.5, 305,
                 "Total Time",
-                information.totalTimeSeconds >= 3600 ? `${(information.totalTimeSeconds / 60 / 60).toFixed(1)} hours` : `${(information.totalTimeSeconds / 60).toFixed(1)} minutes`
+                information.totalTimeSeconds >= 3600 ? pluralize(Number((information.totalTimeSeconds / 60 / 60).toFixed(1)), "hour") : pluralize(Number((information.totalTimeSeconds / 60).toFixed(1)), "minute")
             );
 
             drawCard(ctx, 62.5 + 225 + 20, 305,
                 "Avg. Time",
                 information.totalTimeSeconds >= 3600 ? 
-                    `${(information.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)} hours` 
+                    pluralize(Number((information.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)), "hour") 
                     :
-                    `${(information.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)} minutes`
+                    pluralize(Number((information.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)), "minute")
             );
 
             drawCard(ctx, 62.5, 305 + 116 + 20,
-                `${extraInformation.totalProjects} projects`
+                pluralize(extraInformation.totalProjects, "project")
             );
 
             drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
@@ -165,12 +165,12 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.fillText("Devlogs", 62.5, 550);
             drawCard(ctx, 62.5, 575,
                 "Total Logs",
-                `${extraInformation.totalDevlogs} devlogs`
+                pluralize(extraInformation.totalDevlogs, "devlog")
             );
 
             drawCard(ctx, 62.5 + 225 + 20, 575,
                 "Avg. Chars",
-                `${Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs)} chars`
+                pluralize(Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs), "char")
             );
 
             drawCard(ctx, 62.5 + ((225 + 20) * 2), 575,
@@ -179,19 +179,19 @@ export async function generateCard(information: any, extraInformation: any) {
             );
             
             drawCard(ctx, 62.5, 575 + 116 + 20,
-                `${extraInformation.totalLikes} likes`
+                pluralize(extraInformation.totalLikes, "like")
             );
 
             drawCard(ctx, 62.5, 575 + 116 + 63 + 40,
-                `${extraInformation.totalComments} comments`
+                pluralize(extraInformation.totalComments, "comment")
             );
 
             drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 20,
-                `${extraInformation.totalChars} chars`
+                pluralize(extraInformation.totalChars, "char")
             );
 
             drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 63 + 40,
-                `${extraInformation.totalWords} words`
+                pluralize(extraInformation.totalWords, "word")
             );
 
             /// Heatmap
