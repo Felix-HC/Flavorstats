@@ -99,6 +99,7 @@ export async function generateCard(information: any, extraInformation: any) {
             const topX = 552.5;
             const topY = 305;
             const topWidth = 375;
+            ctx.font = "24px Jua";
             // Description
             const topDescLines: Array<string> = [];
             const topDesc: Array<string> = (extraInformation.topProject.description).split(" ");
@@ -120,7 +121,6 @@ export async function generateCard(information: any, extraInformation: any) {
             drawCard(ctx, topX, topY, undefined, undefined, topWidth, topHeight);
 
             ctx.textBaseline = "middle";
-            ctx.font = "24px Jua";
             ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
             for (let i = 0; i < topDescLines.length; i++) {
                 const lineText = i !== 2 ? topDescLines[i] : `${topDescLines[i].substring(0, topDescLines[i].length - 3)}...`;
