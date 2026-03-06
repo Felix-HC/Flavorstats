@@ -1,7 +1,7 @@
-import OrpheusFlagLeftSvg from "../../assets/flag-orpheus-left.svg";
+import OrpheusFlagLeftSvg from "../../assets/flag-orpheus-left.svg"
 import { useState } from 'react'
-import { useNavigate } from "react-router-dom";
-import { GitBranch } from "lucide-react";
+import { useNavigate } from "react-router-dom"
+import { GitBranch } from "lucide-react"
 
 import './Home.css'
 
@@ -54,7 +54,9 @@ export default function Home() {
                 return (
                   <ul key={index} onClick={() => navigate(`/stats?user=${user.id}`)}>
                     <div>
-                      <img src={user.avatar} />
+                      <div className="avatar-placeholder">
+                        <img src={user.avatar} />
+                      </div>
                       <span>{user.display_name}</span>
                     </div>
                     <span>🍪 {user.cookies || 0}</span>
