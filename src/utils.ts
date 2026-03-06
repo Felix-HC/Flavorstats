@@ -17,10 +17,11 @@ export function calcTime(seconds: number) {
 
 export async function generateCard(information: any, extraInformation: any) {
     const canvas: HTMLCanvasElement = document.createElement("canvas");
-    canvas.height = 1000;
-    canvas.width = 1000;
+    canvas.height = 2000;
+    canvas.width = 2000;
 
     const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
+    ctx?.scale(2, 2);
 
     if (ctx !== null) {
         // Set background color
