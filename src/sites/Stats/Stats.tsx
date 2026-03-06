@@ -183,7 +183,7 @@ export default function Stats() {
                                             firstContent={`${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`}
                                         />
                                         <Card
-                                            firstContent={pluralize(extraInformation.totalShips, "project")}
+                                            firstContent={pluralize(extraInformation.totalShips, "ship")}
                                         />
                                         <Card
                                             firstContent={`${extraInformation.totalShips === 0 ? 0 : Math.floor(extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
