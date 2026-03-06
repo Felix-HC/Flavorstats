@@ -54,7 +54,7 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
             ctx.textBaseline = "middle";
             ctx.font = "54px Jua";
-            ctx.fillText(`${information.displayName}'s Flavortown`, 275, 136);
+            ctx.fillText(`${information.displayName}'s Flavortown`, 275, 136, 650);
 
             // Draw years
             ctx.font = "24px Jua";
@@ -130,13 +130,13 @@ export async function generateCard(information: any, extraInformation: any) {
                 const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
                 topProjectTitle = `${topProjectTitle.substring(0, Math.floor(topWidth - 20 / charWidth) - 4)}...`;
             }
-            ctx.fillText(topProjectTitle, topX + 40 + 20, topY + 32, topWidth - 20);
+            ctx.fillText(topProjectTitle, topX + 40 + 20, topY + 32, topWidth - 10 - 60);
 
             // Divider
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(topX + 10, topY + topHeight - 45);
-            ctx.lineTo(topX + topWidth - 20, topY + topHeight - 45);
+            ctx.lineTo(topX + topWidth - 10, topY + topHeight - 45);
             ctx.stroke();
             ctx.closePath();
             // Stats
