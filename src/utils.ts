@@ -152,7 +152,7 @@ export async function generateCard(information: any, extraInformation: any) {
             ctx.textBaseline = "hanging";
             ctx.font = "24px Jua";
             ctx.fillText(
-                `${extraInformation.topProject.devlogs.totalLikes} likes – ${extraInformation.topProject.devlogs.total} devlogs – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
+                `${pluralize(extraInformation.topProject.devlogs.totalLikes, "like")} – ${pluralize(extraInformation.topProject.devlogs.total, "devlog")} – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
                 topX + 10,
                 topY + topHeight - 30,
                 topWidth - 20

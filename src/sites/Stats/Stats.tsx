@@ -197,7 +197,7 @@ export default function Stats() {
                                     <span id="top-project-title"><span className="noto-emoji">✨</span> {extraInformation.topProject.title}</span>
                                     <span id="top-project-description">{extraInformation.topProject.description}</span>
                                     <div className="divider" />
-                                    <span id="top-project-stats"><span>{extraInformation.topProject.devlogs.totalLikes} likes – {extraInformation.topProject.devlogs.total} devlogs – {Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s</span></span>
+                                    <span id="top-project-stats"><span>{pluralize(extraInformation.topProject.devlogs.totalLikes, "like")} – {pluralize(extraInformation.topProject.devlogs.total, "devlog")} – {Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s</span></span>
                                 </div>
                             </section>
                         </div>
