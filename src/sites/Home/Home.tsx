@@ -16,8 +16,13 @@ export default function Home() {
     setError(undefined);
     setResults(undefined);
     showResults(true);
-    
-    fetch(`http://localhost:5000/search?query=${searchInput}`)
+
+    const controller = new AbortController();
+    setTimeout(() => {
+      controller.abort();
+    }, 10000);
+
+    fetch(`http://localhost:5000/search?query=${searchInput}`, { signal: controller.signal })
       .then(response => response.json())
       .then(data => {
         data.sort((userA: any, userB: any) => userB.cookies - userA.cookies);
