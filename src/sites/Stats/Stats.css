@@ -110,7 +110,7 @@
     width: 364px;
     padding: 10px;
     align-items: flex-start;
-    overflow: scroll;
+    overflow: auto;
     gap: 0;
 
     & > .divider {

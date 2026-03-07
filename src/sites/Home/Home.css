@@ -106,8 +106,7 @@
     width: min(600px, 90vw);
     max-height: 500px;
     transition: .3s ease border-color;
-    overflow: hidden;
-    overflow: scroll;
+    overflow: auto;
 
     & > li {
         list-style: none;
