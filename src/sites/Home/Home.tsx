@@ -22,7 +22,10 @@ export default function Home() {
       controller.abort();
     }, 15000);
 
-    fetch(`http://localhost:5000/search?query=${searchInput}`, { signal: controller.signal })
+    const backendURL: string = import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost";
+    const backendPort: string = import.meta.env.VITE_REACT_APP_BACKEND_PORT || "5000";
+
+    fetch(`${backendURL}:${backendPort}/search?query=${searchInput}`, { signal: controller.signal })
       .then(response => response.json())
       .then(data => {
         data.sort((userA: any, userB: any) => userB.cookies - userA.cookies);
