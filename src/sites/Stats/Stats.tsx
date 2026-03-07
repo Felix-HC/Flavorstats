@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { calcTime, generateCard, pluralize } from '../../utils';
 import { Download } from 'lucide-react';
+import sampleData from "../../assets/sample-data.json"
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
 
@@ -15,10 +17,18 @@ export default function Stats() {
     const [mouseY, setMouseY] = useState<number>(0);
 
     const params = new URLSearchParams(document.location.search);
+    const demo = params.get("demo");
     const userID = params.get("user");
+    const navigate = useNavigate();
 
     const hasMounted = useRef(false);
     useEffect(() => {
+        if (demo) {
+            setUser(sampleData);
+            getExtraInformation(sampleData)
+            return;
+        }
+
         if (!hasMounted.current) {
             fetch(`http://localhost:5000/stats?user=${userID}`)
                 .then(response => response.json())
@@ -133,7 +143,21 @@ export default function Stats() {
         setExtraInformation(extraInformation);
     }
 
-    if (error !== undefined) return <span>{error}</span>;
+    if (error !== undefined) {
+        return (
+            <div id="stats">
+                <div id="stats-error-wrapper">
+                    <h2>Oop.</h2>
+                    <span id="stats-error">{error} :/</span>
+                    <span>I might be getting rate-limited. Try again in ~1 minute or use pre-defined data using the "Demo" button below.</span>
+                    <div>
+                        <button onClick={() => {navigate("/stats?demo=true"); location.reload();}}>Demo</button>
+                        <button onClick={() => navigate("/")}>Home</button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div id="stats">
