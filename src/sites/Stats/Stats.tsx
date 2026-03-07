@@ -254,7 +254,7 @@ export default function Stats() {
                                         />
                                         <Card
                                             firstContent="Fav. Word"
-                                            secondContent={`"${user.mostUsedWords[0][0]}"`}
+                                            secondContent={`"${user.mostUsedWords[0][0]}" (${user.mostUsedWords[0][1]}x)`}
                                         />
                                     </div>
                                     <div>

@@ -175,7 +175,7 @@ export async function generateCard(information: any, extraInformation: any) {
 
             drawCard(ctx, 62.5 + ((225 + 20) * 2), 575,
                 "Fav. Word",
-                `"${information.mostUsedWords[0][0]}"`
+                `"${information.mostUsedWords[0][0]}" (${information.mostUsedWords[0][1]}x)`
             );
             
             drawCard(ctx, 62.5, 575 + 116 + 20,
