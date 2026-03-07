@@ -26,7 +26,7 @@ export function pluralize(count: number, content: string) {
 export async function generateCard(information: any, extraInformation: any) {
     const canvas: HTMLCanvasElement = document.createElement("canvas");
     canvas.height = 2000;
-    canvas.width = 2000;
+    canvas.width = 2060;
 
     const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
     ctx?.scale(2, 2);
@@ -34,7 +34,7 @@ export async function generateCard(information: any, extraInformation: any) {
     if (ctx !== null) {
         // Set background color
         ctx.fillStyle = cssStyles.getPropertyValue("--base");
-        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         const avatar: HTMLImageElement = new Image();
         avatar.src = information.avatar;
