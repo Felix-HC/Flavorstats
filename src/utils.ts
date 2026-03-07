@@ -281,7 +281,7 @@ function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstCont
             // Draw secondContent
             ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
             textWidth = ctx.measureText(secondContent || "").width;
-            ctx.fillText(secondContent || "", x + (225 - textWidth) / 2, y + 116 - 58 / 2, 255 - 10)
+            ctx.fillText(secondContent || "", x + (225 - textWidth) / 2, y + 116 - 58 / 2, 255 - 10);
     }
 }
 
