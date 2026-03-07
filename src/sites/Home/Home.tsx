@@ -1,6 +1,6 @@
 import OrpheusFlagLeftSvg from "../../assets/flag-orpheus-left.svg"
 import { useState } from 'react'
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { GitBranch } from "lucide-react"
 
 import './Home.css'
@@ -69,7 +69,7 @@ export default function Home() {
                 )
               })}
               {(results === undefined && error === undefined) && <span id="results-loading">Loading...</span>}
-              {error !== undefined && <span id="results-not-found">{error}</span>}
+              {error !== undefined && <span id="results-not-found">{error} <span>(Try <Link to="/stats?demo=true">Demo</Link> instead)</span></span>}
             </li>
           </div>
         }

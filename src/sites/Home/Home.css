@@ -157,6 +157,20 @@
     font-family: var(--default-font);
     color: var(--text-3);
     font-size: 36px;
+
+    & > span {
+        font-size: 24px;
+
+        & > a {
+            text-decoration: underline;
+            color: unset;
+            transition: .2s ease color;
+
+            &:hover {
+                color: var(--text-2);
+            }
+        }
+    }
 }
 
 #orpheus-flag {
