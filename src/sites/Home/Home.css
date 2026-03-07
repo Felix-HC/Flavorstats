@@ -97,6 +97,11 @@
     &:hover {
         border-color: var(--text-2);
     }
+
+    &::placeholder {
+        color: var(--text-3);
+        opacity: .7;
+    }
 }
 
 #search-results {
