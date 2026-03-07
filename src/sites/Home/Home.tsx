@@ -20,7 +20,7 @@ export default function Home() {
     const controller = new AbortController();
     setTimeout(() => {
       controller.abort();
-    }, 10000);
+    }, 15000);
 
     fetch(`http://localhost:5000/search?query=${searchInput}`, { signal: controller.signal })
       .then(response => response.json())
