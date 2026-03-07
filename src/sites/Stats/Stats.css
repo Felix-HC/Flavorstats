@@ -18,6 +18,16 @@
 
     & > header {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & > button svg {
+            stroke: var(--text-2);
+        }
+    }
+
+    #stats-header-left {
+        display: flex;
         align-items: center;
         gap: 25px;
         color: var(--text-2);

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { calcTime, generateCard, pluralize } from '../../utils';
-import { Download } from 'lucide-react';
+import { Download, House } from 'lucide-react';
 import sampleData from "../../assets/sample-data.json"
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
@@ -167,14 +167,22 @@ export default function Stats() {
             {(user !== undefined && extraInformation !== undefined) &&
                 <>
                     <header>
-                        <div id="avatar">
-                            <img id="avatar-hat" src={ChefHat} />
-                            <img id="avatar-img" src={user.avatar} />
+                        <div id="stats-header-left">
+                            <div id="avatar">
+                                <img id="avatar-hat" src={ChefHat} />
+                                <img id="avatar-img" src={user.avatar} />
+                            </div>
+                            <div>
+                                <h1>{user.displayName}'s Flavortown</h1>
+                                <span>{extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear + "/" + extraInformation.latestYear}</span>
+                            </div>
                         </div>
-                        <div>
-                            <h1>{user.displayName}'s Flavortown</h1>
-                            <span>{extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear + "/" + extraInformation.latestYear}</span>
-                        </div>
+                        <button onClick={() => navigate("/")}>
+                            <House
+                                size={60}
+                            />
+                        </button>
+                        
                     </header>
                     <main>
                         <div className="stats-row">
