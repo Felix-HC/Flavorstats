@@ -23,6 +23,11 @@ export default function Stats() {
 
     const hasMounted = useRef(false);
     useEffect(() => {
+        window.addEventListener("mousemove", (ev: MouseEvent) => {
+            setMouseX(ev.clientX);
+            setMouseY(ev.clientY);
+        });
+
         if (demo) {
             setUser(sampleData);
             getExtraInformation(sampleData)
@@ -41,11 +46,6 @@ export default function Stats() {
                     setError("Could not fetch user statistics");
                 });
         }
-
-        window.addEventListener("mousemove", (ev: MouseEvent) => {
-            setMouseX(ev.clientX);
-            setMouseY(ev.clientY);
-        });
 
         hasMounted.current = true;
     }, []);
