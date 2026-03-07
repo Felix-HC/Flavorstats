@@ -7,6 +7,10 @@
     padding: 50px;
     gap: 30px;
 
+    & > header, main, footer {
+        animation: fadeIn .5s linear;
+    }
+
     & h1 {
         font-size: 48px;
         line-height: 100%;
@@ -188,5 +192,15 @@
 
     &:hover {
         background: color-mix(in srgb, var(--text-2) 100%, var(--base) 3%);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
