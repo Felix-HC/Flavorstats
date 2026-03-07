@@ -1,0 +1,37 @@
+#not-found {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--base);
+
+    & > main {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        font-family: var(--default-font);
+        color: var(--text-2);
+        border-radius: 8px;
+        box-shadow: var(--default-shadow);
+        background: var(--overlay-2);
+        font-size: 24px;
+
+        & > button {
+            font-family: var(--default-font);
+            color: var(--text);
+            background: var(--text-3);
+            width: fit-content;
+            font-size: 32px;
+            height: 55px;
+            min-width: 170px;
+            border: 3px solid var(--text-2);
+            border-radius: 8px;
+            transition: .2s ease background;
+
+            &:hover {
+                background: color-mix(in srgb, var(--text-3) 100%, var(--base) 3%);
+            }
+        }
+    }
+}
