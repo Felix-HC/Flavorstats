@@ -19,6 +19,10 @@ export default function Stats() {
     const params = new URLSearchParams(document.location.search);
     const demo = params.get("demo");
     const userID = params.get("user");
+
+    const backendURL: string = import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost";
+    const backendPort: string = import.meta.env.VITE_REACT_APP_BACKEND_PORT || "5000";
+
     const navigate = useNavigate();
 
     const hasMounted = useRef(false);
@@ -35,7 +39,7 @@ export default function Stats() {
         }
 
         if (!hasMounted.current) {
-            fetch(`http://localhost:5000/stats?user=${userID}`)
+            fetch(`${backendURL}:${backendPort}/stats?user=${userID}`)
                 .then(response => response.json())
                 .then(data => {
                     setUser(data);
