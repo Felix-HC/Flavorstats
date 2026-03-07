@@ -17,6 +17,14 @@ With the help of [Flavortown's API](https://flavortown.hackclub.com/api/v1/docs)
 
 ![Site displaying Flavortown statistics of the user "Felix"](./assets/overview.png)
 
+### Generated Card
+
+![Card showing Flavortown statistic of the user "Felix"](./assets/card.png)
+
+## Credits
+
+This project is obviously only possible due to the existence of [Flavortown](https://flavortown.hackclub.com/) and its [API](https://flavortown.hackclub.com/).
+
 ## License
 
 This project is licensed under [MIT](./LICENSE).
