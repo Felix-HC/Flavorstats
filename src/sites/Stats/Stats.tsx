@@ -231,7 +231,7 @@ export default function Stats() {
                             </section>
                             <section id="top-project">
                                 <h2>Top Project</h2>
-                                <div className="card">
+                                <div className="card" id="top-project-card">
                                     <span id="top-project-title"><span className="noto-emoji">✨</span> {extraInformation.topProject.title}</span>
                                     <span id="top-project-description">{extraInformation.topProject.description}</span>
                                     <div className="divider" />

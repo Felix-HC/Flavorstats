@@ -160,22 +160,19 @@
 
 #heatmap {
     background: var(--overlay-2);
-    padding: 15px 15px;
     border-radius: 8px;
+    width: fit-content;
     min-width: 300px;
-    max-width: min(600px, 90%);
-    overflow-x: auto;
     box-shadow: var(--default-shadow);
 
     & > #heatmap-grid {
+        padding: 15px;
         display: grid;
         grid-auto-flow: column;
         grid-template-rows: repeat(5, 1fr);
-        width: fit-content;
+        max-width: 85vw;
+        overflow-x: scroll;
         gap: 4px;
-        max-width: 500px;
-        overflow-x: auto;
-        scrollbar-width: thin;
 
         & > div {
             position: relative;

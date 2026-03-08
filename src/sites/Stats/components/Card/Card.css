@@ -1,15 +1,24 @@
 .card {
     background: var(--overlay-2);
     padding: 10px 20px;
-    min-width: 200px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-x: auto;
     gap: 3px;
     font-size: 28px;
     border-radius: 8px;
     box-shadow: var(--default-shadow);
+
+    @media (max-width: 600px) {
+        width: 170px;
+    }
+
+    &:not(#top-project-card) {
+        white-space: nowrap;
+    }
 
     & > .card-first {
         color: var(--text-2);
