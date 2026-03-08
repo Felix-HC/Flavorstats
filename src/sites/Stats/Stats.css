@@ -35,7 +35,7 @@
 
         @media (max-width: 600px) {
             button {
-                scale: .9;
+                display: none;
             }
         }
     }
