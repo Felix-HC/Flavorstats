@@ -91,9 +91,9 @@ export async function generateCard(information: any, extraInformation: any) {
                 pluralize(extraInformation.totalProjects, "project")
             );
 
-            drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
-                `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`
-            );
+            // drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
+            //     `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`
+            // );
 
             /// Draw Top Project
             const topX = 552.5;
