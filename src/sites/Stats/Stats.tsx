@@ -226,6 +226,9 @@ export default function Stats() {
                                         <Card
                                             firstContent={`${extraInformation.totalShips === 0 ? 0 : Math.floor(extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
                                         />
+                                        <Card
+                                            firstContent={pluralize(user.cookies, "cookie")}
+                                        />
                                     </div>
                                 </div>
                             </section>

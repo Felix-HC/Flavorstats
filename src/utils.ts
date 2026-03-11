@@ -95,6 +95,10 @@ export async function generateCard(information: any, extraInformation: any) {
             //     `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`
             // );
 
+            drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
+                pluralize(extraInformation.totalShips, "ship")
+            );
+
             /// Draw Top Project
             const topX = 552.5;
             const topY = 305;
