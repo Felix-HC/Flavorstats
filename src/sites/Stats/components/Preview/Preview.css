@@ -1,14 +1,15 @@
 #preview {
-    & h2 {
-        color: var(--text-2);
-        font-size: 28px;
-    }
-
     & canvas {
         max-height: 600px;
         border: 5px solid var(--text-2);
         border-radius: 12px;
     }
+}
+
+#preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8.67px;
 }
 
 #preview-canvas-container {
@@ -30,17 +31,39 @@
     }
 }
 
+#preview-canvas-buttons {
+    display: flex;
+    gap: 10px;
+
+    & > button {
+        font-family: var(--default-font);
+        padding: 7px 15px;
+        font-size: 24px;
+        border-radius: 8px;
+        transition: .2s ease background;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7.67px;
+    }
+}
+
 #preview-download-btn {
-    font-family: var(--default-font);
     color: var(--text);
     background: var(--text-2);
     border: 3px solid var(--text-4);
-    padding: 7px 15px;
-    font-size: 24px;
-    border-radius: 8px;
-    transition: .2s ease background;
 
     &:hover {
         background: color-mix(in srgb, var(--text-2) 100%, var(--base) 3%);
+    }
+}
+
+#preview-layout-btn {
+    background: var(--blue);
+    border: 3px solid var(--brblue);
+    color: var(--text);
+
+    &:hover {
+        background: color-mix(in srgb, var(--blue) 100%, var(--base) 3%);
     }
 }
