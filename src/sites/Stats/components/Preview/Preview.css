@@ -10,6 +10,25 @@
     }
 }
 
+#preview-canvas-container {
+    position: relative;
+}
+
+#preview-canvas-image-format {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    padding: 3px 5px;
+    border-radius: 5px;
+    color: var(--text);
+    background: rgba(0, 0, 0, .467);
+    transition: .2s ease background;
+
+    &:hover {
+        background: rgba(0, 0, 0, .567);
+    }
+}
+
 #preview-download-btn {
     font-family: var(--default-font);
     color: var(--text);

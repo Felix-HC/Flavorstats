@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { calcTime, generateCard, pluralize } from '../../utils';
+import { calcTime, pluralize } from '../../utils';
 import { Download, House } from 'lucide-react';
 import sampleData from "../../assets/sample-data.json"
 import Card from './components/Card/Card';
