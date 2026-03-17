@@ -7,6 +7,7 @@ import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
 
 import './Stats.css'
+import Preview from './components/Preview/Preview';
 
 export default function Stats() {
     const [user, setUser] = useState<any | undefined>(undefined);
@@ -15,6 +16,7 @@ export default function Stats() {
     const [tooltip, setTooltip] = useState<string | undefined>(undefined);
     const [mouseX, setMouseX] = useState<number>(0);
     const [mouseY, setMouseY] = useState<number>(0);
+    const [showingPreview, showPreview] = useState(false);
 
     const params = new URLSearchParams(document.location.search);
     const demo = params.get("demo");
@@ -293,7 +295,7 @@ export default function Stats() {
                                 </div>
                             </section>
                         </div>
-                        <button id="download-card-btn" onClick={() => generateCard(user, extraInformation)}>
+                        <button id="download-card-btn" onClick={() => showPreview(true)}>
                             <span>Download Card</span>
                             <Download
                                 size={32}
@@ -302,6 +304,7 @@ export default function Stats() {
                         </button>
                     </main>
                     {tooltip !== undefined && <div id="tooltip" style={{left: mouseX + 10, top: mouseY - 30}}><span>{tooltip}</span></div>}
+                    {showingPreview && <Preview showModal={showPreview} information={user} extraInformation={extraInformation} />}
                 </>
             }
         </div>

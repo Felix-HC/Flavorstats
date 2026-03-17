@@ -23,191 +23,195 @@ export function pluralize(count: number, content: string) {
     }
 }
 
-export async function generateCard(information: any, extraInformation: any) {
-    const canvas: HTMLCanvasElement = document.createElement("canvas");
-    canvas.height = 2000;
-    canvas.width = 2060;
+export async function generateCard(information: any, extraInformation: any, scale: number) {
+    return new Promise((resolve, reject) => {
+        const canvas: HTMLCanvasElement = document.createElement("canvas");
+        canvas.height = 1000 * scale;
+        canvas.width = 1030 * scale;
 
-    const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
-    ctx?.scale(2, 2);
+        const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
+        ctx?.scale(scale, scale);
 
-    if (ctx !== null) {
-        // Set background color
-        ctx.fillStyle = cssStyles.getPropertyValue("--base");
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (ctx !== null) {
+            // Set background color
+            ctx.fillStyle = cssStyles.getPropertyValue("--base");
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const avatar: HTMLImageElement = new Image();
-        avatar.src = information.avatar;
-        avatar.onload = () => {
-            // Create circular clipping region
-            ctx.save();
-            ctx.beginPath();
-            ctx.lineWidth = 25;
-            ctx.strokeStyle = cssStyles.getPropertyValue("--red");
-            ctx.arc(150, 150, 75, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.stroke();
-            ctx.clip();
+            const avatar: HTMLImageElement = new Image();
+            avatar.src = information.avatar;
+            avatar.onload = () => {
+                // Create circular clipping region
+                ctx.save();
+                ctx.beginPath();
+                ctx.lineWidth = 25;
+                ctx.strokeStyle = cssStyles.getPropertyValue("--red");
+                ctx.arc(150, 150, 75, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.clip();
 
-            // Draw profile picture
-            const imageData = avatar;
-            ctx.drawImage(imageData, 75, 75, 150, 150);
-            ctx.restore();
+                // Draw profile picture
+                const imageData = avatar;
+                ctx.drawImage(imageData, 75, 75, 150, 150);
+                ctx.restore();
 
-            // Draw Chef Hat
-            const image = new Image();
-            image.src = ChefHat;
-            ctx.drawImage(image, 20, -20, 200, 200);
+                // Draw Chef Hat
+                const image = new Image();
+                image.src = ChefHat;
+                ctx.drawImage(image, 20, -20, 200, 200);
 
-            // Draw name
-            ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
-            ctx.textBaseline = "middle";
-            ctx.font = "54px Jua";
-            ctx.fillText(`${information.displayName}'s Flavortown`, 275, 136, 650);
+                // Draw name
+                ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
+                ctx.textBaseline = "middle";
+                ctx.font = "54px Jua";
+                ctx.fillText(`${information.displayName}'s Flavortown`, 275, 136, 650);
 
-            // Draw years
-            ctx.font = "24px Jua";
-            ctx.fillText(`${extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear}/${extraInformation.latestYear}`, 275, 179);
+                // Draw years
+                ctx.font = "24px Jua";
+                ctx.fillText(`${extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear}/${extraInformation.latestYear}`, 275, 179);
 
-            /// Projects
-            ctx.font = "32px Jua";
-            // Draw total time / avg. time / amount of projects / number of ships
-            ctx.fillText("Projects", 62.5, 280)
+                /// Projects
+                ctx.font = "32px Jua";
+                // Draw total time / avg. time / amount of projects / number of ships
+                ctx.fillText("Projects", 62.5, 280)
 
-            drawCard(ctx, 62.5, 305,
-                "Total Time",
-                information.totalTimeSeconds >= 3600 ? pluralize(Number((information.totalTimeSeconds / 60 / 60).toFixed(1)), "hour") : pluralize(Number((information.totalTimeSeconds / 60).toFixed(1)), "minute")
-            );
+                drawCard(ctx, 62.5, 305,
+                    "Total Time",
+                    information.totalTimeSeconds >= 3600 ? pluralize(Number((information.totalTimeSeconds / 60 / 60).toFixed(1)), "hour") : pluralize(Number((information.totalTimeSeconds / 60).toFixed(1)), "minute")
+                );
 
-            drawCard(ctx, 62.5 + 225 + 20, 305,
-                "Avg. Time",
-                information.totalTimeSeconds >= 3600 ? 
-                    pluralize(Number((information.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)), "hour") 
-                    :
-                    pluralize(Number((information.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)), "minute")
-            );
+                drawCard(ctx, 62.5 + 225 + 20, 305,
+                    "Avg. Time",
+                    information.totalTimeSeconds >= 3600 ? 
+                        pluralize(Number((information.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)), "hour") 
+                        :
+                        pluralize(Number((information.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)), "minute")
+                );
 
-            drawCard(ctx, 62.5, 305 + 116 + 20,
-                pluralize(extraInformation.totalProjects, "project")
-            );
+                drawCard(ctx, 62.5, 305 + 116 + 20,
+                    pluralize(extraInformation.totalProjects, "project")
+                );
 
-            // drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
-            //     `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`
-            // );
+                // drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
+                //     `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`
+                // );
 
-            drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
-                pluralize(extraInformation.totalShips, "ship")
-            );
+                drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
+                    pluralize(extraInformation.totalShips, "ship")
+                );
 
-            /// Draw Top Project
-            const topX = 552.5;
-            const topY = 305;
-            const topWidth = 375;
-            ctx.font = "24px Jua";
-            // Description
-            const topDescLines: Array<string> = [];
-            const topDesc: Array<string> = (extraInformation.topProject.description).split(" ");
-            let topDescLine: number = 0;
-            topDesc.forEach(word => {
-                const topDescLineWidth = ctx.measureText(topDescLines[topDescLine] + word).width;
-                if (topDescLines[topDescLine] === undefined) {
-                    topDescLines[topDescLine] = word;
-                } else if (topDescLineWidth < topWidth - 20) {
-                    topDescLines[topDescLine] = topDescLines[topDescLine] += ` ${word}`;
-                } else {
-                    topDescLine++;
-                    topDescLines[topDescLine] = word;
+                /// Draw Top Project
+                const topX = 552.5;
+                const topY = 305;
+                const topWidth = 375;
+                ctx.font = "24px Jua";
+                // Description
+                const topDescLines: Array<string> = [];
+                const topDesc: Array<string> = (extraInformation.topProject.description).split(" ");
+                let topDescLine: number = 0;
+                topDesc.forEach(word => {
+                    const topDescLineWidth = ctx.measureText(topDescLines[topDescLine] + word).width;
+                    if (topDescLines[topDescLine] === undefined) {
+                        topDescLines[topDescLine] = word;
+                    } else if (topDescLineWidth < topWidth - 20) {
+                        topDescLines[topDescLine] = topDescLines[topDescLine] += ` ${word}`;
+                    } else {
+                        topDescLine++;
+                        topDescLines[topDescLine] = word;
+                    }
+                });
+                topDescLines.splice(3);
+
+                const topHeight = 125 + (24 * topDescLines.length);
+                drawCard(ctx, topX, topY, undefined, undefined, topWidth, topHeight);
+
+                ctx.textBaseline = "middle";
+                ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
+                for (let i = 0; i < topDescLines.length; i++) {
+                    const lineText = i !== 2 ? topDescLines[i] : `${topDescLines[i].substring(0, topDescLines[i].length - 3)}...`;
+                    ctx.fillText(lineText, topX + 10, topY + 72 + i * 30, topWidth - 20);
                 }
-            });
-            topDescLines.splice(3);
 
-            const topHeight = 125 + (24 * topDescLines.length);
-            drawCard(ctx, topX, topY, undefined, undefined, topWidth, topHeight);
+                // Title
+                ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
+                ctx.font = "1000 32px Noto Emoji";
+                ctx.fillText("✨", topX + 10, topY + 31);
+                ctx.font = "32px Jua";
+                
+                let topProjectTitle: string = extraInformation.topProject.title;
+                const topProjectTitleTextWidth: number = ctx.measureText(topProjectTitle).width;
+                if (topProjectTitleTextWidth > topWidth - 20) {
+                    const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
+                    topProjectTitle = `${topProjectTitle.substring(0, Math.floor(topWidth - 20 / charWidth) - 4)}...`;
+                }
+                ctx.fillText(topProjectTitle, topX + 40 + 20, topY + 32, topWidth - 10 - 60);
 
-            ctx.textBaseline = "middle";
-            ctx.fillStyle = cssStyles.getPropertyValue("--text-3");
-            for (let i = 0; i < topDescLines.length; i++) {
-                const lineText = i !== 2 ? topDescLines[i] : `${topDescLines[i].substring(0, topDescLines[i].length - 3)}...`;
-                ctx.fillText(lineText, topX + 10, topY + 72 + i * 30, topWidth - 20);
+                // Divider
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(topX + 10, topY + topHeight - 45);
+                ctx.lineTo(topX + topWidth - 10, topY + topHeight - 45);
+                ctx.stroke();
+                ctx.closePath();
+                // Stats
+                ctx.textBaseline = "hanging";
+                ctx.font = "24px Jua";
+                ctx.fillText(
+                    `${pluralize(extraInformation.topProject.devlogs.totalLikes, "like")} – ${pluralize(extraInformation.topProject.devlogs.total, "devlog")} – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
+                    topX + 10,
+                    topY + topHeight - 30,
+                    topWidth - 20
+                );
+                ctx.textBaseline = "middle";
+
+                /// Devlogs
+                ctx.font = "32px Jua";
+                // Draw total time / avg. time / amount of projects / number of ships
+                ctx.fillText("Devlogs", 62.5, 550);
+                drawCard(ctx, 62.5, 575,
+                    "Total Logs",
+                    pluralize(extraInformation.totalDevlogs, "devlog")
+                );
+
+                drawCard(ctx, 62.5 + 225 + 20, 575,
+                    "Avg. Chars",
+                    pluralize(Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs), "char")
+                );
+
+                drawCard(ctx, 62.5 + ((225 + 20) * 2), 575,
+                    "Fav. Word",
+                    `"${information.mostUsedWords[0][0]}" (${information.mostUsedWords[0][1]}x)`
+                );
+                
+                drawCard(ctx, 62.5, 575 + 116 + 20,
+                    pluralize(extraInformation.totalLikes, "like")
+                );
+
+                drawCard(ctx, 62.5, 575 + 116 + 63 + 40,
+                    pluralize(extraInformation.totalComments, "comment")
+                );
+
+                drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 20,
+                    pluralize(extraInformation.totalChars, "char")
+                );
+
+                drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 63 + 40,
+                    pluralize(extraInformation.totalWords, "word")
+                );
+
+                /// Heatmap
+                drawHeatmap(ctx, extraInformation, 62.5 + ((225 + 20) * 2), 575 + 116 + 20);
+
+                resolve(canvas);
+
+                // // Download
+                // const a: HTMLAnchorElement = document.createElement("a"); 
+                // a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
+                // a.href = canvas.toDataURL();
+                // a.click();
             }
-
-            // Title
-            ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
-            ctx.font = "1000 32px Noto Emoji";
-            ctx.fillText("✨", topX + 10, topY + 31);
-            ctx.font = "32px Jua";
-            
-            let topProjectTitle: string = extraInformation.topProject.title;
-            const topProjectTitleTextWidth: number = ctx.measureText(topProjectTitle).width;
-            if (topProjectTitleTextWidth > topWidth - 20) {
-                const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
-                topProjectTitle = `${topProjectTitle.substring(0, Math.floor(topWidth - 20 / charWidth) - 4)}...`;
-            }
-            ctx.fillText(topProjectTitle, topX + 40 + 20, topY + 32, topWidth - 10 - 60);
-
-            // Divider
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(topX + 10, topY + topHeight - 45);
-            ctx.lineTo(topX + topWidth - 10, topY + topHeight - 45);
-            ctx.stroke();
-            ctx.closePath();
-            // Stats
-            ctx.textBaseline = "hanging";
-            ctx.font = "24px Jua";
-            ctx.fillText(
-                `${pluralize(extraInformation.topProject.devlogs.totalLikes, "like")} – ${pluralize(extraInformation.topProject.devlogs.total, "devlog")} – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
-                topX + 10,
-                topY + topHeight - 30,
-                topWidth - 20
-            );
-            ctx.textBaseline = "middle";
-
-            /// Devlogs
-            ctx.font = "32px Jua";
-            // Draw total time / avg. time / amount of projects / number of ships
-            ctx.fillText("Devlogs", 62.5, 550);
-            drawCard(ctx, 62.5, 575,
-                "Total Logs",
-                pluralize(extraInformation.totalDevlogs, "devlog")
-            );
-
-            drawCard(ctx, 62.5 + 225 + 20, 575,
-                "Avg. Chars",
-                pluralize(Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs), "char")
-            );
-
-            drawCard(ctx, 62.5 + ((225 + 20) * 2), 575,
-                "Fav. Word",
-                `"${information.mostUsedWords[0][0]}" (${information.mostUsedWords[0][1]}x)`
-            );
-            
-            drawCard(ctx, 62.5, 575 + 116 + 20,
-                pluralize(extraInformation.totalLikes, "like")
-            );
-
-            drawCard(ctx, 62.5, 575 + 116 + 63 + 40,
-                pluralize(extraInformation.totalComments, "comment")
-            );
-
-            drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 20,
-                pluralize(extraInformation.totalChars, "char")
-            );
-
-            drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 63 + 40,
-                pluralize(extraInformation.totalWords, "word")
-            );
-
-            /// Heatmap
-            drawHeatmap(ctx, extraInformation, 62.5 + ((225 + 20) * 2), 575 + 116 + 20);
-
-            // Download
-            const a: HTMLAnchorElement = document.createElement("a"); 
-            a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
-            a.href = canvas.toDataURL();
-            a.click();
         }
-    }
+    })
 }
 
 function drawHeatmap(ctx: CanvasRenderingContext2D, extraInformation: any, x: number, y: number) {

@@ -1,0 +1,26 @@
+#preview {
+    & h2 {
+        color: var(--text-2);
+    }
+
+    & canvas {
+        max-height: 600px;
+        border: 5px solid var(--text-2);
+        border-radius: 12px;
+    }
+}
+
+#preview-download-btn {
+    font-family: var(--default-font);
+    color: var(--text);
+    background: var(--text-2);
+    border: 3px solid var(--text-4);
+    padding: 7px 15px;
+    font-size: 24px;
+    border-radius: 8px;
+    transition: .2s ease background;
+
+    &:hover {
+        background: color-mix(in srgb, var(--text-2) 100%, var(--base) 3%);
+    }
+}
