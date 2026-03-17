@@ -1,0 +1,69 @@
+{
+    "totalTimeSeconds": [
+        "Total Time",
+        "",
+        true
+
+    ],
+    "avgTime": [
+        "Avg. Time",
+        "",
+        true
+    ],
+    "totalProjects": [
+        "Total Projects",
+        "project"
+    ],
+    "totalShips": [
+        "Total Ships",
+        "ship"
+    ],
+    "shipPercentage": [
+        "Total Ships",
+        "%"
+    ],
+    "cookies": [
+        "Total Cookies",
+        "cookie"
+    ],
+
+    "totalDevlogs": [
+        "Total Devlogs",
+        "devlog"
+    ],
+    "avgChars": [
+        "Avg. Chars",
+        "char"
+    ],
+    "avgWords": [
+        "Total Words",
+        "word"
+    ],
+    "favWord": [
+        "Fav. Word"
+    ],
+    "totalLikes": [
+        "Total Likes",
+        "like"
+    ],
+    "avgLikes": [
+        "Avg. Likes",
+        "like"
+    ],
+    "totalComments": [
+        "Total Comments",
+        "comment"
+    ],
+    "avgComments": [
+        "Avg. Comments",
+        "comment"
+    ],
+    "totalChars": [
+        "Total Chars",
+        "char"
+    ],
+    "totalWords": [
+        "Total Words",
+        "word"
+    ]
+}

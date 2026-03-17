@@ -143,7 +143,14 @@ export default function Stats() {
             latestYear: creationDates[creationDates.length - 1].getFullYear(),
             topProject: topProject,
             loggedTimeArray: sortedDatesMap,
-            mostDevlogs: sortedDatesByAmount[0]
+            mostDevlogs: sortedDatesByAmount[0],
+
+            avgTime: data.totalTimeSeconds / projects.length,
+            avgChars: Math.floor(totalChars / devlogs),
+            avgWords: Math.floor(totalWords / devlogs),
+            avgLikes: Math.floor(totalReceivedLikes / devlogs),
+            avgComments: Math.floor(totalReceivedComments / devlogs),
+            favWord: data.mostUsedWords[0][0],
         }
 
         setExtraInformation(extraInformation);

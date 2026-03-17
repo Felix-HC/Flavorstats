@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Palette } from 'lucide-react'
 import { generateCard } from '../../../../utils'
+import { defaultLayoutJSON } from '../../../../consts'
 import Modal from '../../../../components/Modal/Modal'
 import LayoutEditor from './components/LayoutEditor/LayoutEditor'
 
@@ -18,7 +19,7 @@ export default function Preview({ showModal, information, extraInformation }: Pr
 
     useEffect(() => {
         const getCard = async () => {
-            const card = await generateCard(information, extraInformation, 1);
+            const card = await generateCard(information, extraInformation, 1, defaultLayoutJSON);
             canvas.current.innerHTML = "";
             canvas.current.append(card);
         }
@@ -27,14 +28,12 @@ export default function Preview({ showModal, information, extraInformation }: Pr
     }, []);
 
     async function downloadCard() {
-        const card: any = await generateCard(information, extraInformation, 2);
+        const card: any = await generateCard(information, extraInformation, 2, defaultLayoutJSON);
 
         const a: HTMLAnchorElement = document.createElement("a");
         a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
         a.href = card.toDataURL();
         a.click();
-
-        // TODO: Alt Text, keep it rather short though!
     }
 
     return (

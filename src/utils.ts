@@ -1,17 +1,20 @@
+import { defaultLayoutJSON } from "./consts";
 import ChefHat from "./assets/chef-hat.webp";
+import translation from "./translations/en_us.json";
 
 const cssStyles = getComputedStyle(document.body);
+let info: any = undefined;
 
 export function calcTime(seconds: number) {
     const returnArray: Array<string> = [];
-    
+
     seconds >= 31579165.44 && returnArray.push(Math.floor(seconds / (60 * 60 * 24 * 30.4583 * 12)) + "y");
     seconds >= 2631597.1200 && returnArray.push(Math.floor((seconds / (60 * 60 * 24 * 30.4583) % 12)) + "m");
     seconds >= 86400 && returnArray.push(Math.floor((seconds / (60 * 60 * 24)) % 30.4583) + "d");
     seconds >= 3600 && returnArray.push(Math.floor((seconds / (60 * 60)) % 24) + "h");
     seconds >= 60 && returnArray.push(Math.floor((seconds / 60) % 60) + "m")
     returnArray.push(Math.floor((seconds) % 60) + "s");
-    
+
     return returnArray;
 }
 
@@ -23,7 +26,32 @@ export function pluralize(count: number, content: string) {
     }
 }
 
-export async function generateCard(information: any, extraInformation: any, scale: number) {
+function statsInfo(id: string) {
+    const nTrans: any = translation;
+    const trans: any = nTrans[id];
+    const value = info[id];
+
+    if (id === "favWord") {
+        return `${value} (${info.mostUsedWords[0][1]}x)`;
+    } else if (trans[2] === true) {
+        return `${value >= 3600 ? pluralize(Number((info[id] / 60 / 60).toFixed(1)), "hour") : pluralize(Number((info[id] / 60).toFixed(1)), "minute")}`;
+    } else if (trans[1] !== undefined) {
+        if (trans[1].length === 1) {
+            return `${value}${trans[1]}`;
+        } else {
+            return pluralize(value, trans[1]);
+        }
+    } else {
+        return value;
+    }
+}
+
+export async function generateCard(information: any, extraInformation: any, scale: number, layout: any) {
+    const trans: any = translation;
+    layout = layout === undefined && defaultLayoutJSON;
+
+    info = Object.assign(information, extraInformation);
+
     return new Promise((resolve, reject) => {
         const canvas: HTMLCanvasElement = document.createElement("canvas");
         canvas.height = 1000 * scale;
@@ -38,7 +66,7 @@ export async function generateCard(information: any, extraInformation: any, scal
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const avatar: HTMLImageElement = new Image();
-            avatar.src = information.avatar;
+            avatar.src = info.avatar;
             avatar.onload = () => {
                 // Create circular clipping region
                 ctx.save();
@@ -64,11 +92,11 @@ export async function generateCard(information: any, extraInformation: any, scal
                 ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
                 ctx.textBaseline = "middle";
                 ctx.font = "54px Jua";
-                ctx.fillText(`${information.displayName}'s Flavortown`, 275, 136, 650);
+                ctx.fillText(`${info.displayName}'s Flavortown`, 275, 136, 650);
 
                 // Draw years
                 ctx.font = "24px Jua";
-                ctx.fillText(`${extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear}/${extraInformation.latestYear}`, 275, 179);
+                ctx.fillText(`${info.earliestYear === info.latestYear ? info.earliestYear : info.earliestYear}/${info.latestYear}`, 275, 179);
 
                 /// Projects
                 ctx.font = "32px Jua";
@@ -76,28 +104,25 @@ export async function generateCard(information: any, extraInformation: any, scal
                 ctx.fillText("Projects", 62.5, 280)
 
                 drawCard(ctx, 62.5, 305,
-                    "Total Time",
-                    information.totalTimeSeconds >= 3600 ? pluralize(Number((information.totalTimeSeconds / 60 / 60).toFixed(1)), "hour") : pluralize(Number((information.totalTimeSeconds / 60).toFixed(1)), "minute")
+                    trans[layout.projects["1"]][0],
+                    statsInfo(layout.projects["1"])
                 );
 
                 drawCard(ctx, 62.5 + 225 + 20, 305,
-                    "Avg. Time",
-                    information.totalTimeSeconds >= 3600 ? 
-                        pluralize(Number((information.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)), "hour") 
-                        :
-                        pluralize(Number((information.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)), "minute")
+                    trans[layout.projects["2"]][0],
+                    statsInfo(layout.projects["2"])
                 );
 
                 drawCard(ctx, 62.5, 305 + 116 + 20,
-                    pluralize(extraInformation.totalProjects, "project")
+                    statsInfo(layout.projects["3"])
                 );
 
                 // drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
-                //     `${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`
+                //     `${info.totalAI === 0 ? 0 : Math.floor(info.totalAI / info.totalProjects * 100)}% AI`
                 // );
 
                 drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
-                    pluralize(extraInformation.totalShips, "ship")
+                    statsInfo(layout.projects["4"])
                 );
 
                 /// Draw Top Project
@@ -107,7 +132,7 @@ export async function generateCard(information: any, extraInformation: any, scal
                 ctx.font = "24px Jua";
                 // Description
                 const topDescLines: Array<string> = [];
-                const topDesc: Array<string> = (extraInformation.topProject.description).split(" ");
+                const topDesc: Array<string> = (info.topProject.description).split(" ");
                 let topDescLine: number = 0;
                 topDesc.forEach(word => {
                     const topDescLineWidth = ctx.measureText(topDescLines[topDescLine] + word).width;
@@ -137,8 +162,8 @@ export async function generateCard(information: any, extraInformation: any, scal
                 ctx.font = "1000 32px Noto Emoji";
                 ctx.fillText("✨", topX + 10, topY + 31);
                 ctx.font = "32px Jua";
-                
-                let topProjectTitle: string = extraInformation.topProject.title;
+
+                let topProjectTitle: string = info.topProject.title;
                 const topProjectTitleTextWidth: number = ctx.measureText(topProjectTitle).width;
                 if (topProjectTitleTextWidth > topWidth - 20) {
                     const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
@@ -157,7 +182,7 @@ export async function generateCard(information: any, extraInformation: any, scal
                 ctx.textBaseline = "hanging";
                 ctx.font = "24px Jua";
                 ctx.fillText(
-                    `${pluralize(extraInformation.topProject.devlogs.totalLikes, "like")} – ${pluralize(extraInformation.topProject.devlogs.total, "devlog")} – ${Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s`,
+                    `${pluralize(info.topProject.devlogs.totalLikes, "like")} – ${pluralize(info.topProject.devlogs.total, "devlog")} – ${Math.floor((info.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(info.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(info.topProject.devlogs.totalTimeLogged % 60)}s`,
                     topX + 10,
                     topY + topHeight - 30,
                     topWidth - 20
@@ -169,38 +194,38 @@ export async function generateCard(information: any, extraInformation: any, scal
                 // Draw total time / avg. time / amount of projects / number of ships
                 ctx.fillText("Devlogs", 62.5, 550);
                 drawCard(ctx, 62.5, 575,
-                    "Total Logs",
-                    pluralize(extraInformation.totalDevlogs, "devlog")
+                    trans[layout.devlogs["1"]][0],
+                    statsInfo(layout.devlogs["1"])
                 );
 
                 drawCard(ctx, 62.5 + 225 + 20, 575,
-                    "Avg. Chars",
-                    pluralize(Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs), "char")
+                    trans[layout.devlogs["2"]][0],
+                    statsInfo(layout.devlogs["2"])
                 );
 
                 drawCard(ctx, 62.5 + ((225 + 20) * 2), 575,
-                    "Fav. Word",
-                    `"${information.mostUsedWords[0][0]}" (${information.mostUsedWords[0][1]}x)`
+                    trans[layout.devlogs["3"]][0],
+                    statsInfo(layout.devlogs["3"])
                 );
-                
+
                 drawCard(ctx, 62.5, 575 + 116 + 20,
-                    pluralize(extraInformation.totalLikes, "like")
+                    statsInfo(layout.devlogs["4"])
                 );
 
                 drawCard(ctx, 62.5, 575 + 116 + 63 + 40,
-                    pluralize(extraInformation.totalComments, "comment")
+                    statsInfo(layout.devlogs["5"])
                 );
 
                 drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 20,
-                    pluralize(extraInformation.totalChars, "char")
+                    statsInfo(layout.devlogs["6"])
                 );
 
                 drawCard(ctx, 62.5 + 225 + 20, 575 + 116 + 63 + 40,
-                    pluralize(extraInformation.totalWords, "word")
+                    statsInfo(layout.devlogs["7"])
                 );
 
                 /// Heatmap
-                drawHeatmap(ctx, extraInformation, 62.5 + ((225 + 20) * 2), 575 + 116 + 20);
+                drawHeatmap(ctx, info, 62.5 + ((225 + 20) * 2), 575 + 116 + 20);
 
                 resolve(canvas);
 
@@ -251,7 +276,7 @@ function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstCont
     width = width || 225;
     height = height || 63;
 
-    if (size === "large") height = 116; 
+    if (size === "large") height = 116;
 
     // Draw Rectangle
     ctx.shadowColor = "#00000040";
@@ -267,7 +292,7 @@ function drawCard(ctx: CanvasRenderingContext2D, x: number, y: number, firstCont
     // Draw Text
     ctx.fillStyle = cssStyles.getPropertyValue("--text-2");
     let textWidth;
-    switch(size) {
+    switch (size) {
         case "small":
             textWidth = ctx.measureText(firstContent || "").width;
             ctx.fillText(firstContent || "", x + (225 - textWidth) / 2, y + 31.5, 255 - 10); // firstContent should never be undefined here, but I'm not gonna risk it for the biscuit (there is no biscuit)
