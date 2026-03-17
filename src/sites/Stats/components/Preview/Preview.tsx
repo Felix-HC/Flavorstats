@@ -40,8 +40,9 @@ export default function Preview({ showModal, information, extraInformation } : P
             <>
                 <h2>Preview</h2>
                 <div id="preview-content">
-                    <div id="preview-canvas-container" ref={canvas}>
-                        <div id="preview-canvas-image-format">PNG</div> {/* // TODO: Make the format changable maybe? */}
+                    <div id="preview-canvas-container">
+                        <div id="preview-canvas" ref={canvas} />
+                        <div id="preview-canvas-image-format">PNG</div> {/* TODO: Make the format changable maybe? */}
                     </div>
                     <button id="preview-download-btn" onClick={() => downloadCard()}>Download</button>
                 </div>
