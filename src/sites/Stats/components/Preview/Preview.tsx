@@ -56,7 +56,7 @@ export default function Preview({ showModal, information, extraInformation }: Pr
                         </button>
                     </div>
                 </div>
-                {showingLayoutEditor && <LayoutEditor showModal={showLayoutEditor} />}
+                {showingLayoutEditor && <LayoutEditor showModal={showLayoutEditor} user={information} extraInformation={extraInformation} />}
             </>
         </Modal>
     )

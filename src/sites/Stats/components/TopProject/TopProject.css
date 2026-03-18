@@ -1,0 +1,33 @@
+.top-project-card {
+    width: 364px;
+    padding: 10px;
+    align-items: flex-start;
+    overflow: auto;
+    gap: 0;
+
+    & > .divider {
+        margin: 5px 0;
+    }
+    
+    & > .top-project-title {
+        color: var(--text-2);
+        font-size: 30px;
+    }
+
+    & > .top-project-description {
+        color: var(--text-3);
+        font-size: 22px;
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        overflow: hidden;
+    }
+
+    & .top-project-stats {
+        color: var(--text-2);
+        font-size: 22px;
+        line-height: 100%;
+    }
+}

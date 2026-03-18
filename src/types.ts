@@ -1,0 +1,1 @@
+export type StatsID = "totalTimeSeconds" | "avgTime" | "totalProjects" | "totalShips" | "shipPercentage" | "cookies" | "totalDevlogs" | "avgChars" | "favWord" | "totalLikes" | "avgLikes" | "totalComments" | "avgComments" | "totalChars" | "totalWords";

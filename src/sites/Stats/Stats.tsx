@@ -1,13 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { calcTime, pluralize } from '../../utils';
 import { Download, House } from 'lucide-react';
 import sampleData from "../../assets/sample-data.json"
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
+import Preview from './components/Preview/Preview';
 
 import './Stats.css'
-import Preview from './components/Preview/Preview';
+import Heatmap from './components/Heatmap/Heatmap';
+import TopProject from './components/TopProject/TopProject';
+
+export const TooltipContext = createContext<any | undefined>(undefined);
 
 export default function Stats() {
     const [user, setUser] = useState<any | undefined>(undefined);
@@ -17,7 +21,7 @@ export default function Stats() {
     const [mouseX, setMouseX] = useState<number>(0);
     const [mouseY, setMouseY] = useState<number>(0);
     const [showingPreview, showPreview] = useState(false);
-
+    
     const params = new URLSearchParams(document.location.search);
     const demo = params.get("demo");
     const userID = params.get("user");
@@ -173,147 +177,136 @@ export default function Stats() {
     }
 
     return (
-        <div id="stats">
-            {(user === undefined && extraInformation === undefined) &&
-                <span id="stats-loading">Loading...</span>
-            }
-            {(user !== undefined && extraInformation !== undefined) &&
-                <>
-                    <header>
-                        <div id="stats-header-left">
-                            <div id="avatar">
-                                <img id="avatar-hat" src={ChefHat} />
-                                <img id="avatar-img" src={user.avatar} />
-                            </div>
-                            <div>
-                                <h1>{user.displayName}'s Flavortown</h1>
-                                <span>{extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear + "/" + extraInformation.latestYear}</span>
-                            </div>
-                        </div>
-                        <button onClick={() => navigate("/")}>
-                            <House
-                                size={60}
-                            />
-                        </button>
-                        
-                    </header>
-                    <main>
-                        <div className="stats-row">
-                            <section id="stats-projects">
-                                <h2>Projects</h2>
+        <TooltipContext value={[tooltip, setTooltip]}>
+            <div id="stats">
+                {(user === undefined && extraInformation === undefined) &&
+                    <span id="stats-loading">Loading...</span>
+                }
+                {(user !== undefined && extraInformation !== undefined) &&
+                    <>
+                        <header>
+                            <div className="stats-header-left">
+                                <div className="avatar">
+                                    <img className="avatar-hat" src={ChefHat} />
+                                    <img className="avatar-img" src={user.avatar} />
+                                </div>
                                 <div>
+                                    <h1>{user.displayName}'s Flavortown</h1>
+                                    <span>{extraInformation.earliestYear === extraInformation.latestYear ? extraInformation.earliestYear : extraInformation.earliestYear + "/" + extraInformation.latestYear}</span>
+                                </div>
+                            </div>
+                            <button onClick={() => navigate("/")}>
+                                <House
+                                    size={60}
+                                />
+                            </button>
+                            
+                        </header>
+                        <main>
+                            <div className="stats-row">
+                                <section id="stats-projects">
+                                    <h2>Projects</h2>
                                     <div>
-                                        <Card
-                                            firstContent="Total Time"
-                                            secondContent={
-                                                user.totalTimeSeconds >= 3600 ?
-                                                    pluralize(Number((user.totalTimeSeconds / 60 / 60).toFixed(1)), "hour")
-                                                    :
-                                                    pluralize(Number((user.totalTimeSeconds / 60).toFixed(1)), "minute")
-                                            }
-                                        />
-                                        <Card
-                                            firstContent="Avg. Time"
-                                            secondContent={
-                                                user.totalTimeSeconds >= 3600 ?
-                                                    pluralize(Number((user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)), "hour")
-                                                    :
-                                                    pluralize(Number((user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)), "minute")
-                                            }
-                                        />
+                                        <div>
+                                            <Card
+                                                firstContent="Total Time"
+                                                secondContent={
+                                                    user.totalTimeSeconds >= 3600 ?
+                                                        pluralize(Number((user.totalTimeSeconds / 60 / 60).toFixed(1)), "hour")
+                                                        :
+                                                        pluralize(Number((user.totalTimeSeconds / 60).toFixed(1)), "minute")
+                                                }
+                                            />
+                                            <Card
+                                                firstContent="Avg. Time"
+                                                secondContent={
+                                                    user.totalTimeSeconds >= 3600 ?
+                                                        pluralize(Number((user.totalTimeSeconds / 60 / 60 / extraInformation.totalProjects).toFixed(1)), "hour")
+                                                        :
+                                                        pluralize(Number((user.totalTimeSeconds / 60 / extraInformation.totalProjects).toFixed(1)), "minute")
+                                                }
+                                            />
+                                        </div>
+                                        <div className="projects-grid">
+                                            <Card
+                                                firstContent={pluralize(extraInformation.totalProjects, "project")}
+                                            />
+                                            {/* <Card
+                                                firstContent={`${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`}
+                                            /> */}
+                                            <Card
+                                                firstContent={pluralize(extraInformation.totalShips, "ship")}
+                                            />
+                                            <Card
+                                                firstContent={`${extraInformation.totalShips === 0 ? 0 : Math.floor(extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
+                                            />
+                                            <Card
+                                                firstContent={pluralize(user.cookies, "cookie")}
+                                            />
+                                        </div>
                                     </div>
-                                    <div id="projects-grid">
-                                        <Card
-                                            firstContent={pluralize(extraInformation.totalProjects, "project")}
-                                        />
-                                        {/* <Card
-                                            firstContent={`${extraInformation.totalAI === 0 ? 0 : Math.floor(extraInformation.totalAI / extraInformation.totalProjects * 100)}% AI`}
-                                        /> */}
-                                        <Card
-                                            firstContent={pluralize(extraInformation.totalShips, "ship")}
-                                        />
-                                        <Card
-                                            firstContent={`${extraInformation.totalShips === 0 ? 0 : Math.floor(extraInformation.totalShips / extraInformation.totalProjects * 100)}% shipped`}
-                                        />
-                                        <Card
-                                            firstContent={pluralize(user.cookies, "cookie")}
-                                        />
-                                    </div>
-                                </div>
-                            </section>
-                            <section id="top-project">
-                                <h2>Top Project</h2>
-                                <div className="card" id="top-project-card">
-                                    <span id="top-project-title"><span className="noto-emoji">✨</span> {extraInformation.topProject.title}</span>
-                                    <span id="top-project-description">{extraInformation.topProject.description}</span>
-                                    <div className="divider" />
-                                    <span id="top-project-stats"><span>{pluralize(extraInformation.topProject.devlogs.totalLikes, "like")} – {pluralize(extraInformation.topProject.devlogs.total, "devlog")} – {Math.floor((extraInformation.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged / 60 % 60)}m {Math.floor(extraInformation.topProject.devlogs.totalTimeLogged % 60)}s</span></span>
-                                </div>
-                            </section>
-                        </div>
-                        <div className="stats-row">
-                            <section>
-                                <h2>Devlogs</h2>
-                                <div>
+                                </section>
+                                <section id="top-project">
+                                    <h2>Top Project</h2>
+                                    <TopProject extraInformation={extraInformation} />
+                                </section>
+                            </div>
+                            <div className="stats-row">
+                                <section>
+                                    <h2>Devlogs</h2>
                                     <div>
-                                        <Card
-                                            firstContent="Total Logs"
-                                            secondContent={pluralize(extraInformation.totalDevlogs, "devlog")}
-                                        />
-                                        <Card
-                                            firstContent="Avg. Chars"
-                                            secondContent={pluralize(Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs), "char")}
-                                        />
-                                        <Card
-                                            firstContent="Avg. Words"
-                                            secondContent={pluralize(Math.floor(extraInformation.totalWords / extraInformation.totalDevlogs), "word")}
-                                        />
-                                        <Card
-                                            firstContent="Fav. Word"
-                                            secondContent={`"${user.mostUsedWords[0][0]}" (${user.mostUsedWords[0][1]}x)`}
-                                        />
+                                        <div>
+                                            <Card
+                                                firstContent="Total Logs"
+                                                secondContent={pluralize(extraInformation.totalDevlogs, "devlog")}
+                                            />
+                                            <Card
+                                                firstContent="Avg. Chars"
+                                                secondContent={pluralize(Math.floor(extraInformation.totalChars / extraInformation.totalDevlogs), "char")}
+                                            />
+                                            <Card
+                                                firstContent="Avg. Words"
+                                                secondContent={pluralize(Math.floor(extraInformation.totalWords / extraInformation.totalDevlogs), "word")}
+                                            />
+                                            <Card
+                                                firstContent="Fav. Word"
+                                                secondContent={`"${user.mostUsedWords[0][0]}" (${user.mostUsedWords[0][1]}x)`}
+                                            />
+                                        </div>
+                                        <div>
+                                            <Card
+                                                firstContent={pluralize(extraInformation.totalLikes, "like")}
+                                            />
+                                            <Card
+                                                firstContent={pluralize(extraInformation.totalComments, "comment")}
+                                            />
+                                            <Card
+                                                firstContent={pluralize(extraInformation.totalChars, "char")}
+                                            />
+                                            <Card
+                                                firstContent={pluralize(extraInformation.totalWords, "word")}
+                                            />
+                                        </div>
                                     </div>
-                                    <div>
-                                        <Card
-                                            firstContent={pluralize(extraInformation.totalLikes, "like")}
-                                        />
-                                        <Card
-                                            firstContent={pluralize(extraInformation.totalComments, "comment")}
-                                        />
-                                        <Card
-                                            firstContent={pluralize(extraInformation.totalChars, "char")}
-                                        />
-                                        <Card
-                                            firstContent={pluralize(extraInformation.totalWords, "word")}
-                                        />
-                                    </div>
-                                </div>
-                            </section>
-                            <section>
-                                <h2>Heatmap</h2>
-                                <div id="heatmap">
-                                    <div id="heatmap-grid" onMouseLeave={() => setTooltip(undefined)}>
-                                        {
-                                            [...extraInformation.loggedTimeArray.entries()].map((devlog, index) => {
-                                                return <div key={index} onMouseEnter={() => setTooltip(`${pluralize(devlog[1][0], "devlog")} (${calcTime(devlog[1][1]).join(" ")})`)} style={{background: `color-mix(in srgb, var(--green) ${(devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%, transparent ${100 - (devlog[1][0] / extraInformation.mostDevlogs[0]) * 100}%)`}} />
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <button id="download-card-btn" onClick={() => showPreview(true)}>
-                            <span>Download Card</span>
-                            <Download
-                                size={32}
-                                strokeWidth={2.2}
-                            />
-                        </button>
-                    </main>
-                    {tooltip !== undefined && <div id="tooltip" style={{left: mouseX + 10, top: mouseY - 30}}><span>{tooltip}</span></div>}
-                    {showingPreview && <Preview showModal={showPreview} information={user} extraInformation={extraInformation} />}
-                </>
-            }
-        </div>
+                                </section>
+                                <section>
+                                    <h2>Heatmap</h2>
+                                    <Heatmap extraInformation={extraInformation} />
+                                </section>
+                            </div>
+                            <button id="download-card-btn" onClick={() => showPreview(true)}>
+                                <span>Download Card</span>
+                                <Download
+                                    size={32}
+                                    strokeWidth={2.2}
+                                />
+                            </button>
+                        </main>
+                        {showingPreview && <Preview showModal={showPreview} information={user} extraInformation={extraInformation} />}
+                        {tooltip !== undefined && <div id="tooltip" style={{left: mouseX + 10, top: mouseY - 30}}><span>{tooltip}</span></div>}
+                    </>
+                }
+            </div>
+        </TooltipContext>
     )
 }

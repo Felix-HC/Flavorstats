@@ -16,6 +16,8 @@
 }
 
 .modal-content {
+    max-height: 85vh;
+    overflow: auto;
     background: var(--overlay-2);
     padding: 20px;
     box-shadow: var(--default-shadow);

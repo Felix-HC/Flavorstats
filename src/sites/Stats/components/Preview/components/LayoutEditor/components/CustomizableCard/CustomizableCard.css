@@ -1,0 +1,31 @@
+.customizable-card {
+    position: relative;
+    cursor: pointer;
+    transition: .2s ease outline;
+    outline: 3px solid transparent;
+
+    &:hover {
+        outline: 3px solid var(--blue);
+    }
+
+    &:hover > .customizable-card-edit-overlay {
+        opacity: 100;
+    }
+}
+
+.customizable-card-edit-overlay {
+    transition: .2s ease opacity;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px);
+    background: color-mix(in srgb, var(--brblue) 75%, transparent 25%);
+
+    & > svg {
+        color: var(--blue);
+    }
+}

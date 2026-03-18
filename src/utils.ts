@@ -26,7 +26,7 @@ export function pluralize(count: number, content: string) {
     }
 }
 
-function statsInfo(id: string) {
+export function statsInfo(id: string) {
     const nTrans: any = translation;
     const trans: any = nTrans[id];
     const value = info[id];
@@ -48,7 +48,9 @@ function statsInfo(id: string) {
 
 export async function generateCard(information: any, extraInformation: any, scale: number, layout: any) {
     const trans: any = translation;
-    layout = layout === undefined && defaultLayoutJSON;
+    if (layout === undefined) {
+        layout = defaultLayoutJSON;
+    }
 
     info = Object.assign(information, extraInformation);
 
@@ -245,7 +247,7 @@ function drawHeatmap(ctx: CanvasRenderingContext2D, extraInformation: any, x: nu
         points.push(date[1][0]);
     });
     if (points.length > 11 * 5) {
-        points.splice(12, points.length - 11 * 5);
+        points.splice(0, (points.length - 11 * 5));
     }
 
     const rows = 5;

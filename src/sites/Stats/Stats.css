@@ -40,13 +40,13 @@
         }
     }
 
-    #stats-header-left {
+    .stats-header-left {
         display: flex;
         align-items: center;
         gap: 25px;
         color: var(--text-2);
 
-        & > div:not(#avatar) {
+        & > div:not(.avatar) {
             display: flex;
             flex-direction: column;
             
@@ -56,7 +56,7 @@
         }
     }
 
-    & > main {
+    & > main, #preview-main {
         display: flex;
         flex-direction: column;
         gap: 30px;
@@ -75,7 +75,7 @@
                     color: var(--text-2);
                 }
 
-                & > div:not(.card, #heatmap) {
+                & > div:not(.card, .heatmap) {
                     display: flex;
                     flex-direction: column;
                     flex-wrap: wrap;
@@ -96,16 +96,16 @@
     }
 }
 
-#avatar {
+.avatar {
     position: relative;
 
-    & #avatar-img {
+    & .avatar-img {
         height: 125px;
         border-radius: 100%;
         border: 10px solid var(--red);
     }
 
-    & #avatar-hat {
+    & .avatar-hat {
         position: absolute;
         height: 130px;
         top: -50px;;
@@ -113,83 +113,16 @@
     }
 }
 
-#projects-grid {
+.projects-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr);
     width: fit-content;
+    height: fit-content;
+    gap: inherit;
 
     @media (max-width: 600px) {
         display: flex !important;
         flex-wrap: wrap;
-    }
-}
-
-#top-project > .card {
-    width: 364px;
-    padding: 10px;
-    align-items: flex-start;
-    overflow: auto;
-    gap: 0;
-
-    & > .divider {
-        margin: 5px 0;
-    }
-    
-    & > #top-project-title {
-        color: var(--text-2);
-        font-size: 30px;
-    }
-
-    & > #top-project-description {
-        color: var(--text-3);
-        font-size: 22px;
-
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        line-clamp: 3;
-        overflow: hidden;
-    }
-
-    & #top-project-stats {
-        color: var(--text-2);
-        font-size: 22px;
-        line-height: 100%;
-    }
-}
-
-#heatmap {
-    background: var(--overlay-2);
-    border-radius: 8px;
-    width: fit-content;
-    min-width: 300px;
-    box-shadow: var(--default-shadow);
-
-    & > #heatmap-grid {
-        padding: 15px;
-        display: grid;
-        grid-auto-flow: column;
-        grid-template-rows: repeat(5, 1fr);
-        max-width: 85vw;
-        overflow-x: auto;
-        gap: 4px;
-
-        & > div {
-            position: relative;
-            border-radius: 3px;
-            height: 25px;
-            width: 25px;
-
-            &::before {
-                content: "";
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                border: 1px solid var(--overlay);
-                opacity: .5;
-                border-radius: 3px;
-            }
-        }
     }
 }
 
