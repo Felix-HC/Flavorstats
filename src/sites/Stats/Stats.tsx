@@ -154,10 +154,11 @@ export default function Stats() {
             avgTime: data.totalTimeSeconds / projects.length,
             avgChars: Math.floor(totalChars / devlogs),
             avgWords: Math.floor(totalWords / devlogs),
-            avgLikes: Math.floor(totalReceivedLikes / devlogs),
-            avgComments: Math.floor(totalReceivedComments / devlogs),
+            avgLikes: Number((totalReceivedLikes / devlogs).toFixed(1)),
+            avgComments: Number((totalReceivedComments / devlogs).toFixed(1)),
             favWord: data.mostUsedWords[0][0],
-            shipPercentage: Math.round(ships / projects.length * 100)
+            shipPercentage: Math.round(ships / projects.length * 100),
+            aiPercentage: Math.round(usedAI / projects.length * 100)
         }
 
         return extraInformation;

@@ -21,6 +21,9 @@
     "shipPercentage": [
         "Shipped"
     ],
+    "aiPercentage": [
+        "Total AI"
+    ],
     "cookies": [
         "Total Cookies",
         "cookie"

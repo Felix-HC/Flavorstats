@@ -39,6 +39,8 @@ export function statsInfo(id: string, information?: any) {
         return `${value} (${info.mostUsedWords[0][1]}x)`;
     } else if (id === "shipPercentage") {
         return `${value}% shipped`
+    } else if (id === "aiPercentage") {
+        return `${value}% AI`
     } else if (trans[2] === true) {
         return `${value >= 3600 ? pluralize(Number((info[id] / 60 / 60).toFixed(1)), "hour") : pluralize(Number((info[id] / 60).toFixed(1)), "minute")}`;
     } else if (trans[1] !== undefined) {

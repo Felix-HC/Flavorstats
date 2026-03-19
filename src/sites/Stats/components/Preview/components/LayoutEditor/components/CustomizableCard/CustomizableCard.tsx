@@ -44,7 +44,7 @@ export default function CustomizableCard({ state, setState, category, size }: Pr
                     <CardSelector
                         category={category}
                         setState={setState}
-                        size={size}
+                        size="large"
                         showSelector={showCardSelector}
                     />
                 </>
