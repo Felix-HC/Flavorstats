@@ -157,7 +157,7 @@ export default function Stats() {
             avgLikes: Math.floor(totalReceivedLikes / devlogs),
             avgComments: Math.floor(totalReceivedComments / devlogs),
             favWord: data.mostUsedWords[0][0],
-            shipPercentage: ships / projects.length * 100
+            shipPercentage: Math.round(ships / projects.length * 100)
         }
 
         return extraInformation;
