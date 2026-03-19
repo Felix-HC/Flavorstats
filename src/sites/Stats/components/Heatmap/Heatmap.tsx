@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default function Heatmap({ information, splice } : Props) {
-    const [tooltip, setTooltip] = useContext(TooltipContext)
+    const [, setTooltip] = useContext(TooltipContext)
     const loggedTimeArray: any = [...information.loggedTimeArray.entries()];
     splice && loggedTimeArray.splice(0, (loggedTimeArray.length - splice));
     
