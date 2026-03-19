@@ -11,22 +11,45 @@ import './LayoutEditor.css'
 type Props = {
     showModal: Function,
     user: any,
-    extraInformation: any
+    extraInformation: any,
+    JSONLayout: any,
+    setJSONLayout: Function
 }
 
-export default function LayoutEditor({ showModal, user, extraInformation }: Props) {
-    const [projects1, setProjects1] = useState<StatsID>("totalTimeSeconds");
-    const [projects2, setProjects2] = useState<StatsID>("avgTime");
-    const [projects3, setProjects3] = useState<StatsID>("totalProjects");
-    const [projects4, setProjects4] = useState<StatsID>("totalShips");
+export default function LayoutEditor({ showModal, user, extraInformation, JSONLayout, setJSONLayout }: Props) {
+    const [projects1, setProjects1] = useState<StatsID>(JSONLayout.projects["1"]);
+    const [projects2, setProjects2] = useState<StatsID>(JSONLayout.projects["2"]);
+    const [projects3, setProjects3] = useState<StatsID>(JSONLayout.projects["3"]);
+    const [projects4, setProjects4] = useState<StatsID>(JSONLayout.projects["4"]);
 
-    const [devlogs1, setDevlogs1] = useState<StatsID>("totalDevlogs");
-    const [devlogs2, setDevlogs2] = useState<StatsID>("avgChars");
-    const [devlogs3, setDevlogs3] = useState<StatsID>("favWord");
-    const [devlogs4, setDevlogs4] = useState<StatsID>("totalLikes");
-    const [devlogs5, setDevlogs5] = useState<StatsID>("totalChars");
-    const [devlogs6, setDevlogs6] = useState<StatsID>("totalComments");
-    const [devlogs7, setDevlogs7] = useState<StatsID>("totalWords");
+    const [devlogs1, setDevlogs1] = useState<StatsID>(JSONLayout.devlogs["1"]);
+    const [devlogs2, setDevlogs2] = useState<StatsID>(JSONLayout.devlogs["2"]);
+    const [devlogs3, setDevlogs3] = useState<StatsID>(JSONLayout.devlogs["3"]);
+    const [devlogs4, setDevlogs4] = useState<StatsID>(JSONLayout.devlogs["4"]);
+    const [devlogs5, setDevlogs5] = useState<StatsID>(JSONLayout.devlogs["5"]);
+    const [devlogs6, setDevlogs6] = useState<StatsID>(JSONLayout.devlogs["6"]);
+    const [devlogs7, setDevlogs7] = useState<StatsID>(JSONLayout.devlogs["7"]);
+
+    function generateJSON() {
+        return {
+            projects: {
+                "1": projects1,
+                "2": projects2,
+                "3": projects3,
+                "4": projects4
+            },
+
+            devlogs: {
+                "1": devlogs1,
+                "2": devlogs2,
+                "3": devlogs3,
+                "4": devlogs4,
+                "5": devlogs5,
+                "6": devlogs6,
+                "7": devlogs7,
+            }
+        }
+    }
 
     return (
         <Modal id="layout-editor" showModal={showModal}>
@@ -108,7 +131,7 @@ export default function LayoutEditor({ showModal, user, extraInformation }: Prop
                                         />
                                     </div>
                                     <div>
-                                        <div className="projects-grid">
+                                        <div className="devlogs-grid">
                                             <CustomizableCard
                                                 size="small"
                                                 category="devlogs"
@@ -141,6 +164,7 @@ export default function LayoutEditor({ showModal, user, extraInformation }: Prop
                         </div>
                     </div>
                 </div>
+                <button id="layout-editor-save" onClick={() => {showModal(false); setJSONLayout(generateJSON())}}>Save</button>
             </>
         </Modal>
     )
