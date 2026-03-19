@@ -134,7 +134,7 @@ export default function LayoutEditor({ showModal, user, extraInformation }: Prop
                                                 setState={setDevlogs7}
                                             />
                                         </div>
-                                        <Heatmap extraInformation={extraInformation} splice={11 * 5} />
+                                        <Heatmap information={extraInformation} splice={11 * 5} />
                                     </div>
                                 </div>
                             </section>

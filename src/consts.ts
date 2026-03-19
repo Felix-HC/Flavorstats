@@ -16,3 +16,6 @@ export const defaultLayoutJSON = {
         7: "totalWords"
     }
 }
+
+export const projectIDs = ["totalTimeSeconds", "avgTime", "shipPercentage", "cookies"];
+export const devlogIDs = ["totalDevlogs", "avgChars", "avgWords", "favWord", "totalLikes", "avgLikes", "totalComments", "avgComments", "totalChars", "totalWords"];

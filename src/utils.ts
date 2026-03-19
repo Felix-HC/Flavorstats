@@ -26,13 +26,19 @@ export function pluralize(count: number, content: string) {
     }
 }
 
-export function statsInfo(id: string) {
+export function statsInfo(id: string, information?: any) {
+    if (info === undefined && information !== undefined) {
+        info = information;
+    }
+    
     const nTrans: any = translation;
     const trans: any = nTrans[id];
     const value = info[id];
 
     if (id === "favWord") {
         return `${value} (${info.mostUsedWords[0][1]}x)`;
+    } else if (id === "shipPercentage") {
+        return `${value}% shipped`
     } else if (trans[2] === true) {
         return `${value >= 3600 ? pluralize(Number((info[id] / 60 / 60).toFixed(1)), "hour") : pluralize(Number((info[id] / 60).toFixed(1)), "minute")}`;
     } else if (trans[1] !== undefined) {
@@ -46,13 +52,13 @@ export function statsInfo(id: string) {
     }
 }
 
-export async function generateCard(information: any, extraInformation: any, scale: number, layout: any) {
+export async function generateCard(information: any, scale: number, layout: any) {
     const trans: any = translation;
     if (layout === undefined) {
         layout = defaultLayoutJSON;
     }
 
-    info = Object.assign(information, extraInformation);
+    info = information;
 
     return new Promise((resolve, reject) => {
         const canvas: HTMLCanvasElement = document.createElement("canvas");
@@ -103,7 +109,7 @@ export async function generateCard(information: any, extraInformation: any, scal
                 /// Projects
                 ctx.font = "32px Jua";
                 // Draw total time / avg. time / amount of projects / number of ships
-                ctx.fillText("Projects", 62.5, 280)
+                ctx.fillText("Projects", 62.5, 280);
 
                 drawCard(ctx, 62.5, 305,
                     trans[layout.projects["1"]][0],
@@ -118,10 +124,6 @@ export async function generateCard(information: any, extraInformation: any, scal
                 drawCard(ctx, 62.5, 305 + 116 + 20,
                     statsInfo(layout.projects["3"])
                 );
-
-                // drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
-                //     `${info.totalAI === 0 ? 0 : Math.floor(info.totalAI / info.totalProjects * 100)}% AI`
-                // );
 
                 drawCard(ctx, 62.5 + 225 + 20, 305 + 116 + 20,
                     statsInfo(layout.projects["4"])

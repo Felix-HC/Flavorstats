@@ -3,6 +3,7 @@
     cursor: pointer;
     transition: .2s ease outline;
     outline: 3px solid transparent;
+    overflow: hidden;
 
     &:hover {
         outline: 3px solid var(--blue);

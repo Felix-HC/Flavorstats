@@ -1,0 +1,40 @@
+.card-selector {
+    position: absolute;
+    z-index: 2;
+    top: 25px;
+    left: 20px;
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    background: var(--overlay-2);
+    border: 3px solid var(--overlay);
+    box-shadow: var(--default-shadow);
+    border-radius: 12px;
+    padding: 10px;
+    max-width: 95%;
+}
+
+.card-selector-bg {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(3px);
+}
+
+.card-selector-card {
+    position: relative;
+    transition: .2s ease outline;
+    outline: 3px solid transparent;
+
+    &:hover {
+        outline: 3px solid var(--blue);
+    }
+
+    &:hover > .customizable-card-edit-overlay {
+        opacity: 100;
+    }
+}

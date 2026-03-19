@@ -9,17 +9,16 @@ import './Preview.css'
 
 type Props = {
     showModal: Function,
-    information: any,
-    extraInformation: any
+    information: any
 }
 
-export default function Preview({ showModal, information, extraInformation }: Props) {
+export default function Preview({ showModal, information }: Props) {
     const canvas: any = useRef(null);
     const [showingLayoutEditor, showLayoutEditor] = useState(false);
 
     useEffect(() => {
         const getCard = async () => {
-            const card = await generateCard(information, extraInformation, 1, defaultLayoutJSON);
+            const card = await generateCard(information, 1, defaultLayoutJSON);
             canvas.current.innerHTML = "";
             canvas.current.append(card);
         }
@@ -28,7 +27,7 @@ export default function Preview({ showModal, information, extraInformation }: Pr
     }, []);
 
     async function downloadCard() {
-        const card: any = await generateCard(information, extraInformation, 2, defaultLayoutJSON);
+        const card: any = await generateCard(information, 2, defaultLayoutJSON);
 
         const a: HTMLAnchorElement = document.createElement("a");
         a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
@@ -56,7 +55,7 @@ export default function Preview({ showModal, information, extraInformation }: Pr
                         </button>
                     </div>
                 </div>
-                {showingLayoutEditor && <LayoutEditor showModal={showLayoutEditor} user={information} extraInformation={extraInformation} />}
+                {showingLayoutEditor && <LayoutEditor showModal={showLayoutEditor} user={information} extraInformation={information} />}
             </>
         </Modal>
     )
