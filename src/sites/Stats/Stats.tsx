@@ -9,6 +9,9 @@ import Heatmap from './components/Heatmap/Heatmap';
 import TopProject from './components/TopProject/TopProject';
 
 import './Stats.css'
+import { generateCard } from '../../utils';
+import { defaultLayoutJSON } from '../../consts';
+import { toast, ToastContainer } from 'react-toastify';
 
 export const TooltipContext = createContext<any | undefined>(undefined);
 export const InformationContext = createContext<any | undefined>(undefined);
@@ -160,6 +163,17 @@ export default function Stats() {
         return extraInformation;
     }
 
+    async function downloadCard() {
+        const card: any = await generateCard(information, 2, defaultLayoutJSON);
+
+        const a: HTMLAnchorElement = document.createElement("a");
+        a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
+        a.href = card.toDataURL();
+        a.click();
+
+        toast.info("Customization is currently unsupported on mobile");
+    }
+
     if (error !== undefined) {
         return (
             <div id="stats">
@@ -282,7 +296,7 @@ export default function Stats() {
                                         <Heatmap information={information} />
                                     </section>
                                 </div>
-                                <button id="download-card-btn" onClick={() => showPreview(true)}>
+                                <button id="download-card-btn" onClick={() => window.innerWidth > 700 ? showPreview(true) : downloadCard()}>
                                     <span>Download Card</span>
                                     <Download
                                         size={32}
@@ -295,6 +309,13 @@ export default function Stats() {
                         </>
                     }
                 </div>
+                <ToastContainer
+                    position="top-right"
+                    theme="light"
+                    newestOnTop={true}
+                    closeOnClick={true}
+                    autoClose={1500}
+                />
             </TooltipContext>
         </InformationContext>
     )

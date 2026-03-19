@@ -60,7 +60,7 @@ export async function generateCard(information: any, scale: number, layout: any)
 
     info = information;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const canvas: HTMLCanvasElement = document.createElement("canvas");
         canvas.height = 1000 * scale;
         canvas.width = 1030 * scale;

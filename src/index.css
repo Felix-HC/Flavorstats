@@ -23,6 +23,11 @@
   --brred: #F4B19F;
   --blue: #3D5E8A;
   --brblue: #4F8FBA;
+
+  /* Toastify */
+  --toastify-text-color-light: var(--text-2) !important;
+  --toastify-color-light: var(--overlay-2) !important;
+  --toastify-color-info: var(--brblue) !important;
 }
 
 button {
