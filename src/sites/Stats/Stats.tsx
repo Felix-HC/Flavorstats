@@ -315,7 +315,7 @@ export default function Stats() {
                     theme="light"
                     newestOnTop={true}
                     closeOnClick={true}
-                    autoClose={1500}
+                    autoClose={3000}
                 />
             </TooltipContext>
         </InformationContext>
