@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Palette } from 'lucide-react'
 import { generateCard } from '../../../../utils'
 import { defaultLayoutJSON } from '../../../../consts'
+import { type ImageFormat } from '../../../../types'
 import Modal from '../../../../components/Modal/Modal'
 import LayoutEditor from './components/LayoutEditor/LayoutEditor'
 
@@ -16,6 +17,8 @@ export default function Preview({ showModal, information }: Props) {
     const canvas: any = useRef(null);
     const [showingLayoutEditor, showLayoutEditor] = useState(false);
     const [JSONLayout, setJSONLayout] = useState(defaultLayoutJSON);
+    const [fileFormat, setFileFormat] = useState<ImageFormat>("image/png");
+    const [fileFormatSelector, setFileFormatSelector] = useState(false);
 
     useEffect(() => {
         const getCard = async () => {
@@ -32,9 +35,13 @@ export default function Preview({ showModal, information }: Props) {
 
         const a: HTMLAnchorElement = document.createElement("a");
         a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
-        a.href = card.toDataURL();
+        a.href = card.toDataURL({fileFormat});
         a.click();
     }
+
+    useEffect(() => {
+        setFileFormatSelector(false);
+    }, [fileFormat]);
 
     return (
         <Modal id="preview" showModal={showModal}>
@@ -43,7 +50,17 @@ export default function Preview({ showModal, information }: Props) {
                 <div id="preview-content">
                     <div id="preview-canvas-container">
                         <div id="preview-canvas" ref={canvas} />
-                        <div id="preview-canvas-image-format">PNG</div> {/* TODO: Make the format changable maybe? */}
+                        <div id="preview-canvas-image-format">
+                            {fileFormatSelector && 
+                            <ul>
+                                <li onClick={() => setFileFormat("image/png")}>PNG</li>
+                                <li onClick={() => setFileFormat("image/webp")}>WEBP</li>
+                                <li onClick={() => setFileFormat("image/jpeg")}>JPEG</li>
+                                <li onClick={() => setFileFormat("image/jpg")}>JPG</li>
+                            </ul>
+                            }
+                            <span onClick={() => setFileFormatSelector(!fileFormatSelector)}>{fileFormat.replace("image/", "").toUpperCase()}</span>
+                        </div>
                     </div>
                     <div id="preview-canvas-buttons">
                         <button id="preview-download-btn" onClick={() => downloadCard()}>Download</button>
