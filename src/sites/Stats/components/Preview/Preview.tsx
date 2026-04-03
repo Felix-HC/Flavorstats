@@ -34,8 +34,8 @@ export default function Preview({ showModal, information }: Props) {
         const card: any = await generateCard(information, 2, JSONLayout);
 
         const a: HTMLAnchorElement = document.createElement("a");
-        a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
-        a.href = card.toDataURL({fileFormat});
+        a.download = `flavortown-${(information.displayName).toLowerCase()}.${fileFormat}`;
+        a.href = card.toDataURL(fileFormat);
         a.click();
     }
 
