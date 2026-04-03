@@ -34,7 +34,13 @@
         outline: 3px solid var(--blue);
     }
 
-    &:hover > .customizable-card-edit-overlay {
+    &:hover>.customizable-card-edit-overlay {
         opacity: 100;
     }
+}
+
+.card-selector-top-project-stats {
+    color: var(--text-3);
+    font-size: 22px;
+    line-height: 100%;
 }

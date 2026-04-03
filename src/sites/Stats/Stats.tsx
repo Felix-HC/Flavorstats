@@ -1,6 +1,10 @@
 import { createContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Download, House } from 'lucide-react';
+import { generateCard } from '../../utils';
+import { getDefaultLayoutJSON } from '../../consts';
+import { toast, ToastContainer } from 'react-toastify';
+import type { InformationObject } from '../../types';
 import sampleData from "../../assets/sample-data.json"
 import Card from './components/Card/Card';
 import ChefHat from '../../assets/chef-hat.webp';
@@ -9,9 +13,6 @@ import Heatmap from './components/Heatmap/Heatmap';
 import TopProject from './components/TopProject/TopProject';
 
 import './Stats.css'
-import { generateCard } from '../../utils';
-import { defaultLayoutJSON } from '../../consts';
-import { toast, ToastContainer } from 'react-toastify';
 
 export const TooltipContext = createContext<any | undefined>(undefined);
 export const InformationContext = createContext<any | undefined>(undefined);
@@ -22,7 +23,7 @@ export default function Stats() {
     const [mouseX, setMouseX] = useState<number>(0);
     const [mouseY, setMouseY] = useState<number>(0);
     const [showingPreview, showPreview] = useState(false);
-    const [information, setInformation] = useState<any | undefined>(undefined);
+    const [information, setInformation] = useState<InformationObject | undefined>(undefined);
     
     const params = new URLSearchParams(document.location.search);
     const demo = params.get("demo");
@@ -165,14 +166,15 @@ export default function Stats() {
     }
 
     async function downloadCard() {
-        const card: any = await generateCard(information, 2, defaultLayoutJSON);
+        const card: any = await generateCard(information, 2, getDefaultLayoutJSON(information?.topProject || {}));
 
         const a: HTMLAnchorElement = document.createElement("a");
-        a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
-        a.href = card.toDataURL();
-        a.click();
-
-        toast.info("Customization is currently unsupported on mobile");
+        if (information !== undefined) {
+            a.download = `flavortown-${(information.displayName).toLowerCase()}.png`;
+            a.href = card.toDataURL();
+            a.click();
+            toast.info("Customization is currently unsupported on mobile");
+        }
     }
 
     if (error !== undefined) {
@@ -251,7 +253,7 @@ export default function Stats() {
                                     </section>
                                     <section id="top-project">
                                         <h2>Top Project</h2>
-                                        <TopProject extraInformation={information} />
+                                        <TopProject project={information.topProject} />
                                     </section>
                                 </div>
                                 <div className="stats-row">

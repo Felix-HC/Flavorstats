@@ -3,7 +3,6 @@ import type { StatsID } from "../../../../../../types"
 import ChefHat from "../../../../../../assets/chef-hat.webp"
 import Modal from '../../../../../../components/Modal/Modal'
 import Heatmap from "../../../Heatmap/Heatmap"
-import TopProject from "../../../TopProject/TopProject"
 import CustomizableCard from "./components/CustomizableCard/CustomizableCard"
 
 import './LayoutEditor.css'
@@ -13,10 +12,12 @@ type Props = {
     user: any,
     extraInformation: any,
     JSONLayout: any,
-    setJSONLayout: Function
+    setJSONLayout: Function,
+    topProject: any,
+    setTopProject: Function
 }
 
-export default function LayoutEditor({ showModal, user, extraInformation, JSONLayout, setJSONLayout }: Props) {
+export default function LayoutEditor({ showModal, user, extraInformation, JSONLayout, setJSONLayout, topProject, setTopProject }: Props) {
     const [projects1, setProjects1] = useState<StatsID>(JSONLayout.projects["1"]);
     const [projects2, setProjects2] = useState<StatsID>(JSONLayout.projects["2"]);
     const [projects3, setProjects3] = useState<StatsID>(JSONLayout.projects["3"]);
@@ -47,12 +48,14 @@ export default function LayoutEditor({ showModal, user, extraInformation, JSONLa
                 "5": devlogs5,
                 "6": devlogs6,
                 "7": devlogs7,
-            }
+            },
+
+            topProject: topProject
         }
     }
 
     return (
-        <Modal id="layout-editor" showModal={showModal}>
+        <Modal id="layout-editor" showModal={showModal} onClick={() => {showModal(false); setJSONLayout(generateJSON)}}>
             <>
                 <h2>Layout Editor</h2>
                 <div id="layout-editor-content">
@@ -103,7 +106,12 @@ export default function LayoutEditor({ showModal, user, extraInformation, JSONLa
                             </section>
                             <section className="top-project">
                                 <h2>‎ </h2>
-                                <TopProject extraInformation={extraInformation} />
+                                <CustomizableCard
+                                    size="large"
+                                    category="topProject"
+                                    setState={setTopProject}
+                                    state={topProject}
+                                />
                             </section>
                         </div>
                         <div className="stats-row">

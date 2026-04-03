@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Palette } from 'lucide-react'
 import { generateCard } from '../../../../utils'
-import { defaultLayoutJSON } from '../../../../consts'
+import { getDefaultLayoutJSON } from '../../../../consts'
 import { type ImageFormat } from '../../../../types'
 import Modal from '../../../../components/Modal/Modal'
 import LayoutEditor from './components/LayoutEditor/LayoutEditor'
@@ -15,8 +15,9 @@ type Props = {
 
 export default function Preview({ showModal, information }: Props) {
     const canvas: any = useRef(null);
+    const [topProject, setTopProject] = useState<any>(information.topProject);
     const [showingLayoutEditor, showLayoutEditor] = useState(false);
-    const [JSONLayout, setJSONLayout] = useState(defaultLayoutJSON);
+    const [JSONLayout, setJSONLayout] = useState(getDefaultLayoutJSON(topProject));
     const [fileFormat, setFileFormat] = useState<ImageFormat>("image/png");
     const [fileFormatSelector, setFileFormatSelector] = useState(false);
 
@@ -73,7 +74,7 @@ export default function Preview({ showModal, information }: Props) {
                         </button>
                     </div>
                 </div>
-                {showingLayoutEditor && <LayoutEditor showModal={showLayoutEditor} user={information} extraInformation={information} JSONLayout={JSONLayout} setJSONLayout={setJSONLayout} />}
+                {showingLayoutEditor && <LayoutEditor showModal={showLayoutEditor} user={information} extraInformation={information} JSONLayout={JSONLayout} setJSONLayout={setJSONLayout} topProject={topProject} setTopProject={setTopProject} />}
             </>
         </Modal>
     )

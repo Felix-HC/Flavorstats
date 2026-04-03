@@ -1,4 +1,3 @@
-import { defaultLayoutJSON } from "./consts";
 import ChefHat from "./assets/chef-hat.webp";
 import translation from "./translations/en_us.json";
 
@@ -57,7 +56,7 @@ export function statsInfo(id: string, information?: any) {
 export async function generateCard(information: any, scale: number, layout: any) {
     const trans: any = translation;
     if (layout === undefined) {
-        layout = defaultLayoutJSON;
+        return;
     }
 
     info = information;
@@ -138,7 +137,7 @@ export async function generateCard(information: any, scale: number, layout: any)
                 ctx.font = "24px Jua";
                 // Description
                 const topDescLines: Array<string> = [];
-                const topDesc: Array<string> = (info.topProject.description).split(" ");
+                const topDesc: Array<string> = (layout.topProject.description).split(" ");
                 let topDescLine: number = 0;
                 topDesc.forEach(word => {
                     const topDescLineWidth = ctx.measureText(topDescLines[topDescLine] + word).width;
@@ -169,7 +168,7 @@ export async function generateCard(information: any, scale: number, layout: any)
                 ctx.fillText("✨", topX + 10, topY + 31);
                 ctx.font = "32px Jua";
 
-                let topProjectTitle: string = info.topProject.title;
+                let topProjectTitle: string = layout.topProject.title;
                 const topProjectTitleTextWidth: number = ctx.measureText(topProjectTitle).width;
                 if (topProjectTitleTextWidth > topWidth - 20) {
                     const charWidth: number = topProjectTitleTextWidth / topProjectTitle.length;
@@ -188,7 +187,7 @@ export async function generateCard(information: any, scale: number, layout: any)
                 ctx.textBaseline = "hanging";
                 ctx.font = "24px Jua";
                 ctx.fillText(
-                    `${pluralize(info.topProject.devlogs.totalLikes, "like")} – ${pluralize(info.topProject.devlogs.total, "devlog")} – ${Math.floor((info.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(info.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(info.topProject.devlogs.totalTimeLogged % 60)}s`,
+                    `${pluralize(layout.topProject.devlogs.totalLikes, "like")} – ${pluralize(layout.topProject.devlogs.total, "devlog")} – ${Math.floor((layout.topProject.devlogs.totalTimeLogged / (60 * 60)) % 60)}h ${Math.floor(layout.topProject.devlogs.totalTimeLogged / 60 % 60)}m ${Math.floor(layout.topProject.devlogs.totalTimeLogged % 60)}s`,
                     topX + 10,
                     topY + topHeight - 30,
                     topWidth - 20
