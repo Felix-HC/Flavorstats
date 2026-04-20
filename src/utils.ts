@@ -32,7 +32,7 @@ export function statsInfo(id: string, information?: any) {
     
     const nTrans: any = translation;
     const trans: any = nTrans[id];
-    const value = info[id];
+    const value = info[id] === null ? "/" : info[id];
 
     if (id === "favWord") {
         return `${value} (${info.mostUsedWords[0][1]}x)`;

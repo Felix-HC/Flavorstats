@@ -67,7 +67,7 @@ export default function Home() {
                       </div>
                       <span>{user.display_name}</span>
                     </div>
-                    <span>🍪 {user.cookies || 0}</span>
+                    <span>🍪 {user.cookies === null ? "/" : user.cookies || 0}</span>
                   </ul>
                 )
               })}
