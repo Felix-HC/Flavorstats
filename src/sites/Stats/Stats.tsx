@@ -146,8 +146,8 @@ export default function Stats() {
             totalComments: totalReceivedComments,
             totalChars: totalChars,
             totalWords: totalWords,
-            earliestYear: creationDates[0].getFullYear(),
-            latestYear: creationDates[creationDates.length - 1].getFullYear(),
+            earliestYear: creationDates[0]?.getFullYear(),
+            latestYear: creationDates[creationDates.length - 1]?.getFullYear(),
             topProject: topProject,
             loggedTimeArray: sortedDatesMap,
             mostDevlogs: sortedDatesByAmount[0],
@@ -157,7 +157,7 @@ export default function Stats() {
             avgWords: Math.floor(totalWords / devlogs),
             avgLikes: Number((totalReceivedLikes / devlogs).toFixed(1)),
             avgComments: Number((totalReceivedComments / devlogs).toFixed(1)),
-            favWord: data.mostUsedWords[0][0],
+            favWord: data.mostUsedWords?.[0]?.[0],
             shipPercentage: Math.round(ships / projects.length * 100),
             aiPercentage: Math.round(usedAI / projects.length * 100)
         }
@@ -251,10 +251,12 @@ export default function Stats() {
                                             </div>
                                         </div>
                                     </section>
-                                    <section id="top-project">
-                                        <h2>Top Project</h2>
-                                        <TopProject project={information.topProject} />
-                                    </section>
+                                    {information.topProject &&
+                                        <section id="top-project">
+                                            <h2>Top Project</h2>
+                                            <TopProject project={information.topProject} />
+                                        </section>
+                                    }
                                 </div>
                                 <div className="stats-row">
                                     <section>

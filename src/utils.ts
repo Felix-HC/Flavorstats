@@ -35,11 +35,11 @@ export function statsInfo(id: string, information?: any) {
     const value = info[id] === null ? "/" : info[id];
 
     if (id === "favWord") {
-        return `${value} (${info.mostUsedWords[0][1]}x)`;
+        return `${value} (${info.mostUsedWords?.[0]?.[1]}x)`;
     } else if (id === "shipPercentage") {
-        return `${value}% shipped`
+        return `${value || 0}% shipped`
     } else if (id === "aiPercentage") {
-        return `${value}% AI`
+        return `${value || 0}% AI`
     } else if (trans[2] === true) {
         return `${value >= 3600 ? pluralize(Number((info[id] / 60 / 60).toFixed(1)), "hour") : pluralize(Number((info[id] / 60).toFixed(1)), "minute")}`;
     } else if (trans[1] !== undefined) {
